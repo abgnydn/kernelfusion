@@ -6,14 +6,14 @@ const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700", "
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kernelfusion.dev"),
-  title: "Kernel Fusion — GPU frameworks waste 92% of their time. We fixed it.",
+  title: "Kernel Fusion — GPU frameworks waste 92% of their time. I fixed it.",
   description: "Hand-fused GPU kernels achieve 720× on sequential compute and 458× on transformer inference over framework dispatch. Two published preprints. Zero install — runs in any browser.",
   keywords: [
     "kernel fusion", "WebGPU", "GPU computing", "transformer inference",
     "compute shaders", "WGSL", "browser AI", "LLM inference",
   ],
   openGraph: {
-    title: "Kernel Fusion — GPU frameworks waste 92% of their time. We fixed it.",
+    title: "Kernel Fusion — GPU frameworks waste 92% of their time. I fixed it.",
     description: "720× on sequential compute. 458× on transformer inference. Two preprints. Zero install.",
     type: "website",
     url: "https://kernelfusion.dev",

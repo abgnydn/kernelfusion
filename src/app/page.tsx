@@ -67,11 +67,11 @@ export default function HomePage() {
           <span className="bg-gradient-to-r from-kf-accent to-orange-300 bg-clip-text text-transparent">92%</span>
           {" "}of their time.
           <br />
-          <span className="text-kf-muted text-3xl md:text-4xl font-bold">We fixed it.</span>
+          <span className="text-kf-muted text-3xl md:text-4xl font-bold">I fixed it.</span>
         </h1>
         <p className="text-lg text-kf-muted max-w-2xl mx-auto mb-8">
           Kernel fusion eliminates per-dispatch overhead by packing entire computations into
-          single GPU instructions. We proved it across evolutionary algorithms and transformer
+          single GPU instructions. Proven across evolutionary algorithms and transformer
           inference — with up to 720&times; speedup. Zero installation. Any browser.
         </p>
         <div className="flex flex-wrap gap-3 justify-center">

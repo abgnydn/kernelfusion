@@ -56,7 +56,7 @@ export default function WhyPage() {
           </h1>
           <p className="text-lg text-kf-muted max-w-lg mx-auto">
             GPU frameworks waste 92% of their time on overhead &mdash; sending tasks one by one
-            instead of all at once. We proved it and fixed it. Two preprints, two domains, one technique.
+            instead of all at once. I proved it and fixed it. Two preprints, two domains, one technique.
           </p>
         </header>
 

@@ -36,7 +36,35 @@ export default function BenchPage() {
       const mod = await import("@/lib/transformer-bench");
       const result = await mod.runSweep(
         (msg: string) => addLog(msg),
-        (row: BenchResult) => setResults((prev) => [...prev, row])
+        (row: BenchResult) => {
+          setResults((prev) => [...prev, row]);
+          // Auto-save each result
+          if (!row.error && row.unfused) {
+            fetch("/api/results", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                gpuName: result?.gpuName || "Unknown",
+                gpuVendor: "",
+                gpuArch: "",
+                config: row.label,
+                layers: row.layers,
+                dModel: row.D || 0,
+                dispatches: row.dispatches,
+                unfusedMs: row.unfused.mean_ms,
+                fused1tMs: row.fused?.mean_ms ?? null,
+                parallelMs: row.parallel?.mean_ms ?? null,
+                speedup1t: row.speedup,
+                speedupParallel: row.parSpeedup ?? null,
+                speedupPytorch: null,
+                tokensPerSec: row.parallel?.tokens_per_sec ?? row.fused?.tokens_per_sec ?? null,
+                screenWidth: window.screen.width,
+                screenHeight: window.screen.height,
+                isMobile: /Android|iPhone|iPad|iPod/i.test(navigator.userAgent),
+              }),
+            }).catch(() => {});
+          }
+        }
       );
       setGpuName(result.gpuName || "Unknown");
     } catch (err) {
@@ -103,8 +131,9 @@ export default function BenchPage() {
         </button>
 
         <p className="text-[11px] text-kf-muted/60 text-center mb-8">
-          Runs unfused, single-threaded fused, and parallel fused kernels across 9 configurations + sequence scaling.
-          All computation runs locally on your GPU.
+          By clicking Run, your GPU model and benchmark results are saved anonymously.
+          No personal information is collected.{" "}
+          <a href="/privacy" className="text-kf-accent/60 hover:text-kf-accent transition">Privacy policy</a>
         </p>
 
         {/* Results Table */}

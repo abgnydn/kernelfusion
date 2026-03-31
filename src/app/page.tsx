@@ -169,7 +169,8 @@ export default function HomePage() {
             Independent Researcher
           </p>
           <div className="flex gap-3 justify-center mt-4">
-            <a href="https://github.com/abgnydn" className="btn-secondary text-xs">GitHub</a>
+            <a href="https://github.com/abgnydn" target="_blank" rel="noopener" className="btn-secondary text-xs">GitHub</a>
+            <a href="https://www.linkedin.com/in/abgnydn/" target="_blank" rel="noopener" className="btn-secondary text-xs">LinkedIn</a>
             <a href={LINKS.gpuBench} className="btn-secondary text-xs">gpubench.dev</a>
           </div>
         </div>

@@ -22,11 +22,11 @@ const papers = [
     title: "Single-Kernel Fusion for Autoregressive Transformer Decoding",
     subtitle: "via WebGPU Compute Shaders",
     results: [
-      { number: "13.7\u00D7", label: "fused vs unfused (D=32)" },
-      { number: "92%", label: "time wasted on dispatch overhead" },
-      { number: "1", label: "dispatch instead of 1,024" },
+      { number: "34.1\u00D7", label: "at SEQ=256 (sequence scaling)" },
+      { number: "29.9\u00D7", label: "over PyTorch MPS (D=32)" },
+      { number: "13.5\u00D7", label: "fused vs unfused (N=30)" },
     ],
-    description: "Current browser LLM engines dispatch separate GPU kernels per operation per token per layer. We fuse the entire decoding loop into one dispatch. 6.5-13.7\u00D7 faster across all tested configurations.",
+    description: "Current browser LLM engines dispatch separate GPU kernels per operation per token per layer. We fuse the entire decoding loop into one dispatch. 6.6-13.5\u00D7 faster across 9 configurations (N=30). Speedup scales to 34.1\u00D7 at SEQ=256. torch.compile fails with InductorError on all configs.",
     links: [
       { label: "Code", href: LINKS.transformerRepo },
     ],
@@ -145,11 +145,9 @@ export default function HomePage() {
       {/* Who is behind this */}
       <section className="max-w-3xl mx-auto px-6 py-16">
         <div className="card text-center">
-          <h2 className="text-xl font-bold mb-3">Built by Ahmet Baris Gunaydin</h2>
+          <h2 className="text-xl font-bold mb-3">Ahmet Baris Gunaydin</h2>
           <p className="text-sm text-kf-muted leading-relaxed max-w-lg mx-auto">
-            Independent researcher. Self-taught developer. Former Vine core team.
-            Built the engine, ran the benchmarks, wrote the papers — in one week,
-            with a newborn at home.
+            Independent Researcher
           </p>
           <div className="flex gap-3 justify-center mt-4">
             <a href="https://github.com/abgnydn" className="btn-secondary text-xs">GitHub</a>

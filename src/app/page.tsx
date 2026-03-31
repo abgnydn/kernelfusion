@@ -59,7 +59,8 @@ export default function HomePage() {
           inference — with up to 720&times; speedup. Zero installation. Any browser.
         </p>
         <div className="flex flex-wrap gap-3 justify-center">
-          <a href={LINKS.bench} className="btn-primary">Test your GPU</a>
+          <a href="/bench" className="btn-primary">Run Transformer Benchmark</a>
+          <a href={LINKS.bench} className="btn-secondary">GPU Compute Benchmarks</a>
           <a href="#research" className="btn-secondary">See the research</a>
         </div>
       </header>

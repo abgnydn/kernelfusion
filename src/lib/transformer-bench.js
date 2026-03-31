@@ -15,14 +15,17 @@ import {
 } from './shader-gen.js';
 
 // Central config — change once, applies everywhere
-export const BENCH = { WARMUP: 5, RUNS: 30 };
+export const BENCH = { WARMUP: 3, RUNS: 10 };  // Reduced for exploratory run with D=256/512
 
 export async function initWebGPU() {
   if (!navigator.gpu) throw new Error('WebGPU not supported');
   const adapter = await navigator.gpu.requestAdapter({ powerPreference: 'high-performance' });
   if (!adapter) throw new Error('No GPU adapter found');
   const info = adapter.info || await adapter.requestAdapterInfo?.() || {};
+  const features = [];
+  if (adapter.features.has('shader-f16')) features.push('shader-f16');
   const device = await adapter.requestDevice({
+    requiredFeatures: features,
     requiredLimits: {
       maxStorageBufferBindingSize: adapter.limits.maxStorageBufferBindingSize,
       maxBufferSize: adapter.limits.maxBufferSize,
@@ -369,14 +372,15 @@ async function benchF16Fused(device, cfg, warmup = BENCH.WARMUP, runs = BENCH.RU
 // Main sweep: D × Layers
 export const CONFIGS = [
   { D: 32,  heads: 2, ffn: 4, seq: 64, layers: 1, label: 'D=32, L=1' },
-  { D: 32,  heads: 2, ffn: 4, seq: 64, layers: 2, label: 'D=32, L=2' },
   { D: 32,  heads: 2, ffn: 4, seq: 64, layers: 4, label: 'D=32, L=4' },
   { D: 64,  heads: 2, ffn: 4, seq: 64, layers: 1, label: 'D=64, L=1' },
-  { D: 64,  heads: 2, ffn: 4, seq: 64, layers: 2, label: 'D=64, L=2' },
   { D: 64,  heads: 2, ffn: 4, seq: 64, layers: 4, label: 'D=64, L=4' },
   { D: 128, heads: 2, ffn: 4, seq: 64, layers: 1, label: 'D=128, L=1' },
-  { D: 128, heads: 2, ffn: 4, seq: 64, layers: 2, label: 'D=128, L=2' },
   { D: 128, heads: 2, ffn: 4, seq: 64, layers: 4, label: 'D=128, L=4' },
+  { D: 256, heads: 4, ffn: 4, seq: 64, layers: 1, label: 'D=256, L=1' },
+  { D: 256, heads: 4, ffn: 4, seq: 64, layers: 4, label: 'D=256, L=4' },
+  { D: 512, heads: 8, ffn: 4, seq: 64, layers: 1, label: 'D=512, L=1' },
+  { D: 512, heads: 8, ffn: 4, seq: 64, layers: 4, label: 'D=512, L=4' },
 ];
 
 // Sequence length scaling: fixed D=32, L=1, vary SEQ
@@ -405,16 +409,35 @@ export async function runSweep(log, onResult) {
     try {
       log(`  Unfused (N=${BENCH.RUNS})...`);
       const unfused = await benchUnfused(device, cfg);
-      log(`  ${unfused.mean_ms.toFixed(1)} ± ${unfused.std_ms.toFixed(1)} ms (N=${unfused.n}) | ${unfused.tokens_per_sec.toFixed(0)} tok/s`);
+      log(`  ${unfused.mean_ms.toFixed(1)} ± ${unfused.std_ms.toFixed(1)} ms | ${unfused.tokens_per_sec.toFixed(0)} tok/s`);
 
-      log(`  Fused (N=${BENCH.RUNS})...`);
+      log(`  Fused-1T (N=${BENCH.RUNS})...`);
       const fused = await benchFused(device, cfg);
-      log(`  ${fused.mean_ms.toFixed(1)} ± ${fused.std_ms.toFixed(1)} ms (N=${fused.n}) | ${fused.tokens_per_sec.toFixed(0)} tok/s`);
+      log(`  ${fused.mean_ms.toFixed(1)} ± ${fused.std_ms.toFixed(1)} ms | ${fused.tokens_per_sec.toFixed(0)} tok/s`);
+
+      log(`  Fused-parallel (N=${BENCH.RUNS})...`);
+      const parallel = await benchParallelFused(device, cfg);
+      log(`  ${parallel.mean_ms.toFixed(1)} ± ${parallel.std_ms.toFixed(1)} ms | ${parallel.tokens_per_sec.toFixed(0)} tok/s`);
+
+      let f16 = null;
+      if (device.features.has('shader-f16')) {
+        log(`  Fused-f16 (N=${BENCH.RUNS})...`);
+        f16 = await benchF16Fused(device, cfg);
+        if (f16.error) {
+          log(`  f16: ${f16.error}`);
+          f16 = null;
+        } else {
+          log(`  ${f16.mean_ms.toFixed(1)} ± ${f16.std_ms.toFixed(1)} ms | ${f16.tokens_per_sec.toFixed(0)} tok/s`);
+        }
+      } else {
+        log(`  f16: not supported on this GPU`);
+      }
 
       const speedup = unfused.mean_ms / fused.mean_ms;
-      log(`  Speedup: ${speedup.toFixed(1)}×\n`);
+      const parSpeedup = unfused.mean_ms / parallel.mean_ms;
+      log(`  Speedup: fused-1T ${speedup.toFixed(1)}× | parallel ${parSpeedup.toFixed(1)}×${f16 ? ' | f16 ' + (unfused.mean_ms / f16.mean_ms).toFixed(1) + '×' : ''}\n`);
 
-      const row = { ...c, unfused, fused, speedup, dispatches };
+      const row = { ...c, unfused, fused, parallel, f16, speedup, parSpeedup, dispatches };
       results.push(row);
       if (onResult) onResult(row);
     } catch (e) {
@@ -444,15 +467,29 @@ export async function runSweep(log, onResult) {
   }
 
   log(`\n========== FULL RESULTS (N=${BENCH.RUNS}, mean ± std) ==========\n`);
-  log('Config            | Dispatches | Unfused (ms)         | Fused (ms)           | Speedup');
-  log('------------------|------------|----------------------|----------------------|--------');
+  log('Config            | Dispatches | Unfused (ms)         | Fused-1T (ms)        | Parallel (ms)        | Fused-1T  | Parallel');
+  log('------------------|------------|----------------------|----------------------|----------------------|-----------|--------');
   for (const r of results) {
     if (r.error) {
       log(`${r.label.padEnd(17)} | ${String(r.dispatches || '?').padStart(10)} | ERROR: ${r.error}`);
     } else {
       const uf = `${r.unfused.mean_ms.toFixed(1)} ± ${r.unfused.std_ms.toFixed(1)}`;
       const ff = `${r.fused.mean_ms.toFixed(1)} ± ${r.fused.std_ms.toFixed(1)}`;
-      log(`${r.label.padEnd(17)} | ${String(r.dispatches).padStart(10)} | ${uf.padStart(20)} | ${ff.padStart(20)} | ${r.speedup.toFixed(1)}×`);
+      const pf = r.parallel ? `${r.parallel.mean_ms.toFixed(1)} ± ${r.parallel.std_ms.toFixed(1)}` : 'N/A';
+      log(`${r.label.padEnd(17)} | ${String(r.dispatches).padStart(10)} | ${uf.padStart(20)} | ${ff.padStart(20)} | ${pf.padStart(20)} | ${r.speedup.toFixed(1)}×`.padEnd(9) + ` | ${r.parSpeedup.toFixed(1)}×`);
+    }
+  }
+
+  // F16 results if available
+  const f16Results = results.filter(r => r.f16 && !r.f16.error);
+  if (f16Results.length > 0) {
+    log('\nF16 Results       | Fused-f32 (ms)       | Fused-f16 (ms)       | f16 speedup');
+    log('------------------|----------------------|----------------------|-----------');
+    for (const r of f16Results) {
+      const ff = `${r.fused.mean_ms.toFixed(1)} ± ${r.fused.std_ms.toFixed(1)}`;
+      const f16f = `${r.f16.mean_ms.toFixed(1)} ± ${r.f16.std_ms.toFixed(1)}`;
+      const f16sp = (r.fused.mean_ms / r.f16.mean_ms).toFixed(2);
+      log(`${r.label.padEnd(17)} | ${ff.padStart(20)} | ${f16f.padStart(20)} | ${f16sp}×`);
     }
   }
 

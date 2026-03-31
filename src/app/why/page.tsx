@@ -3,11 +3,11 @@ import { LINKS } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Why Kernel Fusion Matters — kernelfusion.dev",
-  description: "GPU frameworks waste 92% of their time on dispatch overhead. We eliminated it. Here's what that means for everyone.",
+  description: "GPU frameworks waste 92% of their time on dispatch overhead. I eliminated it. Here's what that means for everyone.",
 };
 
 const beforeAfter = [
-  { before: "ChatGPT in your browser types 5 words per second. You assume your laptop isn't powerful enough.", after: "Your GPU was idle 92% of the time. We eliminated the waiting. Same GPU, 6-458\u00D7 faster." },
+  { before: "ChatGPT in your browser types 5 words per second. You assume your laptop isn't powerful enough.", after: "Your GPU was idle 92% of the time. The waiting is eliminated. Same GPU, 6-458\u00D7 faster." },
   { before: "Running AI locally means installing Python, CUDA, PyTorch, downloading model weights, debugging driver conflicts.", after: "Open a browser tab. That's it. The AI runs on the GPU you already have, at near-native speed." },
   { before: "Every AI feature costs $2-4/hour in cloud GPU. 100K users = $50K/month in servers.", after: "The user's GPU does the work. Server cost: $0. The browser IS the infrastructure." },
   { before: "A student in rural India can't afford a GPU cluster or cloud API credits to learn AI.", after: "A $300 phone with Chrome can run transformer inference locally. No internet needed after model download." },
@@ -24,8 +24,8 @@ const personas = [
 
 const steps = [
   { title: "The problem: 92% overhead", desc: "GPU frameworks (PyTorch, JAX, WebLLM) send one small task to the GPU, wait for it to finish, send the next one. For a 64-token generation with 4 layers, that's 1,024 separate round-trips. Each round-trip takes longer than the actual math." },
-  { title: "The fix: one dispatch", desc: "We pack the entire computation \u2014 all tokens, all layers, all operations \u2014 into a single GPU instruction. The GPU loops internally. No round-trips. No waiting. Same math, same result." },
-  { title: "The proof: two preprints", desc: "Paper 1: 159-720\u00D7 on evolutionary computation across CUDA, WebGPU, JAX, Triton. Paper 2: 66-458\u00D7 on transformer inference with a parallel kernel. Both on the same hardware as the baselines. All code and data public." },
+  { title: "The fix: one dispatch", desc: "Pack the entire computation \u2014 all tokens, all layers, all operations \u2014 into a single GPU instruction. The GPU loops internally. No round-trips. No waiting. Same math, same result." },
+  { title: "The proof: two preprints", desc: "Paper 1: 159-720\u00D7 on sequential fitness evaluation across CUDA, WebGPU, JAX, Triton. Paper 2: 66-458\u00D7 on transformer inference with a parallel kernel. Both on the same hardware as the baselines. All code and data public." },
   { title: "The result: AI in the browser", desc: "16,000 tokens per second at D=32 in Chrome. No Python, no CUDA, no cloud. A laptop running a browser outperforms PyTorch on the same GPU by up to 161\u00D7." },
 ];
 

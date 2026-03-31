@@ -1,7 +1,7 @@
 export const LINKS = {
   // Papers
   ecPaper: "https://doi.org/10.5281/zenodo.19343570",
-  transformerPaper: "", // coming soon
+  transformerPaper: "https://doi.org/10.5281/zenodo.19344277",
 
   // Repos
   ecRepo: "https://github.com/abgnydn/webgpu-kernel-fusion",

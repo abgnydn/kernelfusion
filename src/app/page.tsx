@@ -18,17 +18,19 @@ const papers = [
     ],
   },
   {
-    status: "new",
+    status: "published",
     title: "Single-Kernel Fusion for Autoregressive Transformer Decoding",
     subtitle: "via WebGPU Compute Shaders",
     results: [
-      { number: "34.1\u00D7", label: "at SEQ=256 (sequence scaling)" },
-      { number: "29.9\u00D7", label: "over PyTorch MPS (D=32)" },
-      { number: "13.5\u00D7", label: "fused vs unfused (N=30)" },
+      { number: "458\u00D7", label: "parallel kernel vs unfused (D=256)" },
+      { number: "161\u00D7", label: "over PyTorch MPS (D=32)" },
+      { number: "16K", label: "tokens/sec in the browser" },
     ],
-    description: "Current browser LLM engines dispatch separate GPU kernels per operation per token per layer. We fuse the entire decoding loop into one dispatch. 6.6-13.5\u00D7 faster across 9 configurations (N=30). Speedup scales to 34.1\u00D7 at SEQ=256. torch.compile fails with InductorError on all configs.",
+    description: "Browser LLM engines dispatch 1,024 separate GPU kernels per generation. We fuse everything into one dispatch. Single-threaded: 6.6-13.5\u00D7. Parallel kernel (64 threads + shared memory): 66-458\u00D7. Beats PyTorch MPS by 7.5-161\u00D7 at all tested sizes up to D=256. 16,410 tok/s at D=32.",
     links: [
+      { label: "Preprint", href: LINKS.transformerPaper },
       { label: "Code", href: LINKS.transformerRepo },
+      { label: "Benchmarks", href: LINKS.bench },
     ],
   },
 ];

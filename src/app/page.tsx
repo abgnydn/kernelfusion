@@ -71,7 +71,7 @@ export default function HomePage() {
         </h1>
         <p className="text-lg text-kf-muted max-w-2xl mx-auto mb-8">
           Kernel fusion eliminates per-dispatch overhead by packing entire computations into
-          single GPU instructions. Proven across evolutionary algorithms and transformer
+          single GPU instructions. Proven across sequential fitness evaluation and transformer
           inference — with up to 720&times; speedup. Zero installation. Any browser.
         </p>
         <div className="flex flex-wrap gap-3 justify-center">

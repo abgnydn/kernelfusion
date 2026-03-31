@@ -40,7 +40,7 @@ export default function WhyPage() {
         {/* Nav */}
         <nav className="flex items-center justify-between py-6">
           <a href="/" className="text-sm font-semibold text-kf-text">kernelfusion.dev</a>
-          <a href="/bench" className="text-sm text-kf-accent hover:underline">Run the benchmark &rarr;</a>
+          <a href={LINKS.transformerBench} className="text-sm text-kf-accent hover:underline">Run the benchmark &rarr;</a>
         </nav>
 
         {/* Hero */}
@@ -139,8 +139,8 @@ export default function WhyPage() {
           <h2 className="text-2xl font-bold mb-4">See it for yourself</h2>
           <p className="text-kf-muted mb-8">Run the benchmarks on your hardware, right now.</p>
           <div className="flex flex-wrap gap-3 justify-center">
-            <a href="/bench" className="btn-primary">Transformer Benchmark</a>
-            <a href={LINKS.bench} className="btn-secondary">GPU Compute Benchmarks</a>
+            <a href={LINKS.transformerBench} className="btn-primary">Transformer Benchmark</a>
+            <a href={LINKS.gpuBench} className="btn-secondary">GPU Compute Benchmarks</a>
             <a href={LINKS.ecPaper} className="btn-secondary">Paper 1</a>
             <a href={LINKS.transformerPaper} className="btn-secondary">Paper 2</a>
           </div>

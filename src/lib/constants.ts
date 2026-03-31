@@ -9,7 +9,10 @@ export const LINKS = {
   benchRepo: "https://github.com/abgnydn/gpubench",
   siteRepo: "https://github.com/abgnydn/kernelfusion",
 
+  // Benchmarks
+  gpuBench: "https://gpubench.dev",
+  transformerBench: "https://gpubench.dev/transformer",
+
   // Sites
-  bench: "https://gpubench.dev",
   site: "https://kernelfusion.dev",
 } as const;

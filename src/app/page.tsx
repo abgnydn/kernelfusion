@@ -14,7 +14,7 @@ const papers = [
     links: [
       { label: "Preprint", href: LINKS.ecPaper },
       { label: "Code", href: LINKS.ecRepo },
-      { label: "Benchmarks", href: LINKS.bench },
+      { label: "Benchmarks", href: LINKS.gpuBench },
     ],
   },
   {
@@ -30,7 +30,7 @@ const papers = [
     links: [
       { label: "Preprint", href: LINKS.transformerPaper },
       { label: "Code", href: LINKS.transformerRepo },
-      { label: "Benchmarks", href: LINKS.bench },
+      { label: "Benchmarks", href: LINKS.transformerBench },
     ],
   },
 ];
@@ -59,9 +59,9 @@ export default function HomePage() {
           inference — with up to 720&times; speedup. Zero installation. Any browser.
         </p>
         <div className="flex flex-wrap gap-3 justify-center">
-          <a href="/bench" className="btn-primary">Run Transformer Benchmark</a>
-          <a href={LINKS.bench} className="btn-secondary">GPU Compute Benchmarks</a>
-          <a href="#research" className="btn-secondary">See the research</a>
+          <a href="/why" className="btn-primary">Why this matters</a>
+          <a href={LINKS.transformerBench} className="btn-secondary">Transformer Benchmark</a>
+          <a href={LINKS.gpuBench} className="btn-secondary">GPU Compute Benchmark</a>
         </div>
       </header>
 
@@ -154,7 +154,7 @@ export default function HomePage() {
           </p>
           <div className="flex gap-3 justify-center mt-4">
             <a href="https://github.com/abgnydn" className="btn-secondary text-xs">GitHub</a>
-            <a href={LINKS.bench} className="btn-secondary text-xs">gpubench.dev</a>
+            <a href={LINKS.gpuBench} className="btn-secondary text-xs">gpubench.dev</a>
           </div>
         </div>
       </section>
@@ -164,8 +164,9 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-kf-muted">
           <span className="font-semibold text-kf-text">kernelfusion.dev</span>
           <div className="flex gap-5">
-            <a href="/bench" className="hover:text-kf-text transition">Transformer Bench</a>
-            <a href={LINKS.bench} className="hover:text-kf-text transition">GPU Bench</a>
+            <a href="/why" className="hover:text-kf-text transition">Why this matters</a>
+            <a href={LINKS.transformerBench} className="hover:text-kf-text transition">Transformer Bench</a>
+            <a href={LINKS.gpuBench} className="hover:text-kf-text transition">GPU Bench</a>
             <a href={LINKS.siteRepo} className="hover:text-kf-text transition">GitHub</a>
             <span>MIT License</span>
           </div>

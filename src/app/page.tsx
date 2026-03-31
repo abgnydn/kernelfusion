@@ -164,7 +164,8 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-kf-muted">
           <span className="font-semibold text-kf-text">kernelfusion.dev</span>
           <div className="flex gap-5">
-            <a href={LINKS.bench} className="hover:text-kf-text transition">Benchmarks</a>
+            <a href="/bench" className="hover:text-kf-text transition">Transformer Bench</a>
+            <a href={LINKS.bench} className="hover:text-kf-text transition">GPU Bench</a>
             <a href={LINKS.siteRepo} className="hover:text-kf-text transition">GitHub</a>
             <span>MIT License</span>
           </div>

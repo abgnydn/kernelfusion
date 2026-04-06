@@ -331,9 +331,6 @@ export default function HomePage() {
             <a href={LINKS.sdkRepo} target="_blank" rel="noopener" className="text-xs font-medium px-3 py-1.5 rounded-md bg-kf-accent/10 text-kf-accent hover:bg-kf-accent/20 transition">
               GitHub
             </a>
-            <a href={LINKS.transformerPaper} target="_blank" rel="noopener" className="text-xs font-medium px-3 py-1.5 rounded-md bg-kf-border/50 text-kf-muted hover:text-kf-text transition">
-              Paper
-            </a>
           </div>
         </div>
       </section>

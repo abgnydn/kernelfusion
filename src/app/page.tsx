@@ -115,6 +115,7 @@ export default function HomePage() {
           <a href="#research" className="hover:text-kf-text transition">Research</a>
           <a href="#sdk" className="hover:text-kf-text transition">SDK</a>
           <a href={LINKS.gpuBench} className="hover:text-kf-text transition">Benchmarks</a>
+          <a href={LINKS.results} className="hover:text-kf-text transition">All Results</a>
         </div>
       </nav>
 
@@ -358,6 +359,7 @@ export default function HomePage() {
             <a href="/why" className="hover:text-kf-text transition">Why this matters</a>
             <a href={LINKS.transformerBench} className="hover:text-kf-text transition">Transformer Bench</a>
             <a href={LINKS.gpuBench} className="hover:text-kf-text transition">GPU Bench</a>
+            <a href={LINKS.results} className="hover:text-kf-text transition">All Results</a>
             <a href={LINKS.siteRepo} className="hover:text-kf-text transition">GitHub</a>
             <span>MIT License</span>
           </div>

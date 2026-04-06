@@ -173,9 +173,11 @@ export default function WhyPage() {
           <div className="flex flex-wrap gap-3 justify-center">
             <a href={LINKS.transformerBench} className="btn-primary">Transformer Benchmark</a>
             <a href={LINKS.gpuBench} className="btn-secondary">GPU Compute Benchmarks</a>
-            <a href={LINKS.ecPaper} className="btn-secondary">Paper 1</a>
-            <a href={LINKS.transformerPaper} className="btn-secondary">Paper 2</a>
+            <a href={LINKS.results} className="btn-secondary">All Results (Open Data)</a>
           </div>
+          <p className="text-xs text-kf-muted/50 mt-4">
+            Every result from every device is public. No cherry-picking. Verify any claim yourself.
+          </p>
         </section>
       </div>
 

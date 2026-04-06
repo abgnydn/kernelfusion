@@ -12,6 +12,7 @@ export const LINKS = {
   // Benchmarks
   gpuBench: "https://gpubench.dev",
   transformerBench: "https://gpubench.dev/transformer",
+  results: "https://gpubench.dev/results",
 
   // Demos
   flappyDemo: "https://gpubench.dev/demos/flappy.html",

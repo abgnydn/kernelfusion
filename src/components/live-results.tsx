@@ -205,6 +205,29 @@ export function LiveResults() {
         </div>
       </div>
 
+      {/* Open data */}
+      <div className="rounded-lg border border-kf-border bg-kf-bg/50 p-4 mb-6">
+        <div className="flex items-start gap-3">
+          <div className="text-xl flex-shrink-0">&#x1F4CA;</div>
+          <div className="flex-1">
+            <h4 className="font-semibold text-kf-text mb-1">Every result is public</h4>
+            <p className="text-xs text-kf-muted leading-relaxed mb-2">
+              We don&apos;t cherry-pick results. Every benchmark run from every device is published
+              in a searchable, sortable, downloadable dataset. GPU name, score, browser, OS, timestamp &mdash; all of it.
+              No data is hidden. Verify any claim yourself.
+            </p>
+            <a
+              href={LINKS.results}
+              target="_blank"
+              rel="noopener"
+              className="text-xs font-medium px-3 py-1.5 rounded-md bg-kf-accent/10 text-kf-accent hover:bg-kf-accent/20 transition inline-block"
+            >
+              Browse all {data.total.toLocaleString()} results &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+
       {/* Recent runs feed */}
       {recentRuns.length > 0 && (
         <div className="mb-6">

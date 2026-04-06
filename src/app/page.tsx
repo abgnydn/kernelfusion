@@ -113,6 +113,7 @@ export default function HomePage() {
           <a href="/why" className="hover:text-kf-text transition">Why this matters</a>
           <a href="#demos" className="hover:text-kf-text transition">Demos</a>
           <a href="#research" className="hover:text-kf-text transition">Research</a>
+          <a href="#sdk" className="hover:text-kf-text transition">SDK</a>
           <a href={LINKS.gpuBench} className="hover:text-kf-text transition">Benchmarks</a>
         </div>
       </nav>
@@ -273,6 +274,68 @@ export default function HomePage() {
           <div className="flex-1 h-px bg-kf-border" />
         </div>
         <LiveResults />
+      </section>
+
+      {/* SDK */}
+      <section id="sdk" className="max-w-4xl mx-auto px-6 py-16">
+        <div className="flex items-center gap-4 mb-12">
+          <div className="flex-1 h-px bg-kf-border" />
+          <span className="text-xs text-kf-muted font-medium uppercase tracking-widest">SDK</span>
+          <div className="flex-1 h-px bg-kf-border" />
+        </div>
+
+        <div className="card">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded-full bg-kf-accent/10 text-kf-accent">
+              npm package
+            </span>
+          </div>
+
+          <h3 className="text-xl font-bold mb-1">@webgpu-fusion/core</h3>
+          <p className="text-sm text-kf-muted mb-4">
+            One import. One dispatch. All tokens, all layers, all operations fused into a single GPU kernel.
+          </p>
+
+          <div className="bg-kf-bg rounded-lg p-4 font-mono text-xs text-kf-muted mb-4">
+            <p className="text-kf-muted/50">npm install @webgpu-fusion/core</p>
+            <p className="mt-3 text-kf-muted/50">{"// 3 lines to benchmark your GPU"}</p>
+            <p><span className="text-kf-cyan">import</span> {"{ FusedTransformer }"} <span className="text-kf-cyan">from</span> <span className="text-kf-green">{`'@webgpu-fusion/core'`}</span></p>
+            <p><span className="text-kf-cyan">const</span> model = <span className="text-kf-cyan">await</span> FusedTransformer.create({"{ dModel: 128, nHeads: 2, nLayers: 4 }"})</p>
+            <p><span className="text-kf-cyan">const</span> stats = <span className="text-kf-cyan">await</span> model.benchmark({"{ runs: 10 }"})</p>
+          </div>
+
+          <div className="grid grid-cols-3 gap-3 mb-4">
+            <div className="bg-kf-bg rounded-lg p-3 text-center">
+              <div className="text-lg font-extrabold text-kf-accent">4,081&times;</div>
+              <div className="text-[10px] text-kf-muted mt-1">Apple Silicon avg</div>
+            </div>
+            <div className="bg-kf-bg rounded-lg p-3 text-center">
+              <div className="text-lg font-extrabold text-kf-accent">826&times;</div>
+              <div className="text-[10px] text-kf-muted mt-1">Android phones avg</div>
+            </div>
+            <div className="bg-kf-bg rounded-lg p-3 text-center">
+              <div className="text-lg font-extrabold text-kf-accent">0</div>
+              <div className="text-[10px] text-kf-muted mt-1">install required</div>
+            </div>
+          </div>
+
+          <p className="text-xs text-kf-muted leading-relaxed mb-4">
+            TypeScript. f32 and f16 precision. Int4 quantization. Single-thread and parallel (64-thread shared memory) modes.
+            Works in Chrome, Firefox, Safari — any WebGPU-capable browser.
+          </p>
+
+          <div className="flex gap-2">
+            <a href={LINKS.sdk} target="_blank" rel="noopener" className="text-xs font-medium px-3 py-1.5 rounded-md bg-kf-accent/10 text-kf-accent hover:bg-kf-accent/20 transition">
+              npm
+            </a>
+            <a href={LINKS.sdkRepo} target="_blank" rel="noopener" className="text-xs font-medium px-3 py-1.5 rounded-md bg-kf-accent/10 text-kf-accent hover:bg-kf-accent/20 transition">
+              GitHub
+            </a>
+            <a href={LINKS.transformerPaper} target="_blank" rel="noopener" className="text-xs font-medium px-3 py-1.5 rounded-md bg-kf-border/50 text-kf-muted hover:text-kf-text transition">
+              Paper
+            </a>
+          </div>
+        </div>
       </section>
 
       {/* Who is behind this */}

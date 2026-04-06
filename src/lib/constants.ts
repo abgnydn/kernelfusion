@@ -17,6 +17,10 @@ export const LINKS = {
   flappyDemo: "https://gpubench.dev/demos/flappy.html",
   swarmDemo: "https://gpubench.dev/swarm",
 
+  // SDK
+  sdk: "https://www.npmjs.com/package/@webgpu-fusion/core",
+  sdkRepo: "https://github.com/abgnydn/webgpu-fusion-sdk",
+
   // Sites
   site: "https://kernelfusion.dev",
 } as const;

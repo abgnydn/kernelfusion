@@ -14,7 +14,7 @@ export const LINKS = {
   transformerBench: "https://gpubench.dev/transformer",
 
   // Demos
-  flappyDemo: "https://gpubench.dev/flappy",
+  flappyDemo: "https://gpubench.dev/demos/flappy.html",
   swarmDemo: "https://gpubench.dev/swarm",
 
   // Sites

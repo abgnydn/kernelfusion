@@ -292,15 +292,15 @@ export default function HomePage() {
             </span>
           </div>
 
-          <h3 className="text-xl font-bold mb-1">@webgpu-fusion/core</h3>
+          <h3 className="text-xl font-bold mb-1">@wgpu-fusion/core</h3>
           <p className="text-sm text-kf-muted mb-4">
             One import. One dispatch. All tokens, all layers, all operations fused into a single GPU kernel.
           </p>
 
           <div className="bg-kf-bg rounded-lg p-4 font-mono text-xs text-kf-muted mb-4">
-            <p className="text-kf-muted/50">npm install @webgpu-fusion/core</p>
+            <p className="text-kf-muted/50">npm install @wgpu-fusion/core</p>
             <p className="mt-3 text-kf-muted/50">{"// 3 lines to benchmark your GPU"}</p>
-            <p><span className="text-kf-cyan">import</span> {"{ FusedTransformer }"} <span className="text-kf-cyan">from</span> <span className="text-kf-green">{`'@webgpu-fusion/core'`}</span></p>
+            <p><span className="text-kf-cyan">import</span> {"{ FusedTransformer }"} <span className="text-kf-cyan">from</span> <span className="text-kf-green">{`'@wgpu-fusion/core'`}</span></p>
             <p><span className="text-kf-cyan">const</span> model = <span className="text-kf-cyan">await</span> FusedTransformer.create({"{ dModel: 128, nHeads: 2, nLayers: 4 }"})</p>
             <p><span className="text-kf-cyan">const</span> stats = <span className="text-kf-cyan">await</span> model.benchmark({"{ runs: 10 }"})</p>
           </div>

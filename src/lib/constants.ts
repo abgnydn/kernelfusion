@@ -20,7 +20,7 @@ export const LINKS = {
   swarmDemo: "https://gpubench.dev/swarm",
 
   // SDK
-  sdk: "https://www.npmjs.com/package/@webgpu-fusion/core",
+  sdk: "https://www.npmjs.com/package/@wgpu-fusion/core",
   sdkRepo: "https://github.com/abgnydn/webgpu-fusion-sdk",
 
   // Sites

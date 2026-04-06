@@ -6,6 +6,7 @@ export const LINKS = {
   // Repos
   ecRepo: "https://github.com/abgnydn/webgpu-kernel-fusion",
   transformerRepo: "https://github.com/abgnydn/webgpu-transformer-fusion",
+  p2pRepo: "https://github.com/abgnydn/webgpu-p2p-evolution",
   benchRepo: "https://github.com/abgnydn/gpubench",
   siteRepo: "https://github.com/abgnydn/kernelfusion",
 

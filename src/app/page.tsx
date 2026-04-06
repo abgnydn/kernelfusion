@@ -43,18 +43,18 @@ const demos = [
 const papers = [
   {
     status: "new",
-    title: "Browser-to-Browser Evolutionary Computation",
-    subtitle: "A WebRTC Transport for Distributed Island-Model Optimization",
+    title: "Browser-to-Browser Distributed Evolution",
+    subtitle: "WebRTC P2P Genome Exchange for Island-Model Optimization",
     results: [
-      { number: "28.8%", label: "fitness improvement (P2P, 4 islands)" },
-      { number: "97%", label: "performance at 50% Byzantine nodes" },
+      { number: "+11.5%", label: "fitness improvement (4 islands, p=0.015)" },
+      { number: "+14.6%", label: "cross-platform (RTX 3090, N=5)" },
       { number: "0", label: "install required" },
     ],
-    description: "Browser instances serve as evolutionary islands, exchanging elite genomes via WebRTC data channels. A 130-line signaling relay brokers the handshake; all genome data flows peer-to-peer. Validated across Apple Metal, NVIDIA Vulkan, and mobile Safari.",
+    description: "Browser tabs form evolutionary islands, exchanging elite genomes directly via WebRTC data channels. A 113-line signaling relay brokers the handshake; all genome data flows peer-to-peer. Private rooms by default. Validated on Rastrigin (N=30), across Apple Metal and NVIDIA Vulkan.",
     links: [
-      { label: "Preprint", href: null },
       { label: "Live Demo", href: LINKS.flappyDemo },
-      { label: "Code", href: null },
+      { label: "Code", href: LINKS.p2pRepo },
+      { label: "All Demos", href: LINKS.swarmDemo },
     ],
   },
   {

@@ -1,6 +1,62 @@
 import { LINKS } from "@/lib/constants";
+import { LiveResults } from "@/components/live-results";
+
+const demos = [
+  {
+    emoji: "🐦",
+    title: "Flappy Evolution",
+    description: "Watch 50 neural networks learn to play Flappy Bird in real-time. GPU evaluates 4,096 birds per dispatch via kernel fusion. Open in multiple tabs to connect via WebRTC and evolve together.",
+    results: [
+      { number: "4,096", label: "birds per GPU dispatch" },
+      { number: "200+", label: "generations/sec" },
+      { number: "P2P", label: "WebRTC genome exchange" },
+    ],
+    href: LINKS.flappyDemo,
+    papers: ["Paper 1 (kernel fusion)", "Paper 3 (distributed P2P)"],
+  },
+  {
+    emoji: "📊",
+    title: "Rastrigin Benchmark",
+    description: "4,096-population evolutionary optimization on a 2,000-dimensional multimodal landscape. Measures raw GPU throughput of the fused evolutionary kernel.",
+    results: [
+      { number: "170", label: "gen/s (M2 Pro)" },
+      { number: "400", label: "gen/s (RTX 3090)" },
+      { number: "4,081\u00D7", label: "real-world avg (Apple Silicon)" },
+    ],
+    href: LINKS.gpuBench,
+    papers: ["Paper 1 (kernel fusion)"],
+  },
+  {
+    emoji: "🧬",
+    title: "Transformer Decoding",
+    description: "Fused attention + FFN + LayerNorm in a single GPU dispatch. Benchmarks unfused, fused, parallel, and f16 variants across model dimensions.",
+    results: [
+      { number: "458\u00D7", label: "parallel vs unfused" },
+      { number: "16K", label: "tokens/sec" },
+      { number: "D=256", label: "max tested dimension" },
+    ],
+    href: LINKS.transformerBench,
+    papers: ["Paper 2 (transformer fusion)"],
+  },
+];
 
 const papers = [
+  {
+    status: "new",
+    title: "Browser-to-Browser Evolutionary Computation",
+    subtitle: "A WebRTC Transport for Distributed Island-Model Optimization",
+    results: [
+      { number: "28.8%", label: "fitness improvement (P2P, 4 islands)" },
+      { number: "97%", label: "performance at 50% Byzantine nodes" },
+      { number: "0", label: "install required" },
+    ],
+    description: "Browser instances serve as evolutionary islands, exchanging elite genomes via WebRTC data channels. A 130-line signaling relay brokers the handshake; all genome data flows peer-to-peer. Validated across Apple Metal, NVIDIA Vulkan, and mobile Safari.",
+    links: [
+      { label: "Preprint", href: null },
+      { label: "Live Demo", href: LINKS.flappyDemo },
+      { label: "Code", href: null },
+    ],
+  },
   {
     status: "published",
     title: "Single-Kernel Fusion for Sequential Fitness Evaluation",
@@ -55,6 +111,7 @@ export default function HomePage() {
         </div>
         <div className="flex items-center gap-5 text-sm text-kf-muted">
           <a href="/why" className="hover:text-kf-text transition">Why this matters</a>
+          <a href="#demos" className="hover:text-kf-text transition">Demos</a>
           <a href="#research" className="hover:text-kf-text transition">Research</a>
           <a href={LINKS.gpuBench} className="hover:text-kf-text transition">Benchmarks</a>
         </div>
@@ -64,20 +121,20 @@ export default function HomePage() {
       <header className="max-w-4xl mx-auto px-6 pt-12 pb-8 text-center">
         <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
           GPU frameworks waste{" "}
-          <span className="bg-gradient-to-r from-kf-accent to-orange-300 bg-clip-text text-transparent">92%</span>
+          <span className="bg-gradient-to-r from-kf-accent to-orange-300 bg-clip-text text-transparent">92% or more</span>
           {" "}of their time.
           <br />
           <span className="text-kf-muted text-3xl md:text-4xl font-bold">I fixed it.</span>
         </h1>
         <p className="text-lg text-kf-muted max-w-2xl mx-auto mb-8">
           Kernel fusion eliminates per-dispatch overhead by packing entire computations into
-          single GPU instructions. Proven across sequential fitness evaluation and transformer
-          inference — with up to 720&times; speedup. Zero installation. Any browser.
+          single GPU instructions. 487 real-world devices tested — up to 4,081&times; on Apple
+          Silicon, 826&times; on phones. Zero installation. Any browser.
         </p>
         <div className="flex flex-wrap gap-3 justify-center">
-          <a href="/why" className="btn-primary">Why this matters</a>
-          <a href={LINKS.transformerBench} className="btn-secondary">Transformer Benchmark</a>
-          <a href={LINKS.gpuBench} className="btn-secondary">GPU Compute Benchmark</a>
+          <a href={LINKS.flappyDemo} className="btn-primary">Flappy Evolution Demo</a>
+          <a href="/why" className="btn-secondary">Why this matters</a>
+          <a href={LINKS.gpuBench} className="btn-secondary">GPU Benchmarks</a>
         </div>
       </header>
 
@@ -91,7 +148,7 @@ export default function HomePage() {
               <div className="bg-kf-bg rounded-lg p-4 font-mono text-xs text-kf-muted leading-relaxed">
                 <p className="text-kf-red">dispatch</p> step 1 → <span className="text-kf-muted/50">wait</span> → <span className="text-kf-red">dispatch</span> step 2 → <span className="text-kf-muted/50">wait</span>
                 <p className="mt-1">... &times; 1,500 steps = 22,500 round-trips</p>
-                <p className="mt-2 text-kf-red">92% of time = waiting, not computing</p>
+                <p className="mt-2 text-kf-red">92%+ of time = waiting, not computing</p>
               </div>
             </div>
             <div>
@@ -103,6 +160,53 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Live Demos */}
+      <section id="demos" className="max-w-4xl mx-auto px-6 py-16">
+        <div className="flex items-center gap-4 mb-12">
+          <div className="flex-1 h-px bg-kf-border" />
+          <span className="text-xs text-kf-muted font-medium uppercase tracking-widest">Live Demos</span>
+          <div className="flex-1 h-px bg-kf-border" />
+        </div>
+
+        <div className="space-y-6">
+          {demos.map((demo, idx) => (
+            <a
+              key={demo.title}
+              href={demo.href}
+              className={`card block transition hover:border-kf-accent/30 ${idx === 0 ? 'ring-1 ring-kf-accent/20' : ''}`}
+            >
+              {idx === 0 && (
+                <span className="text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded-full bg-kf-cyan/10 text-kf-cyan mb-3 inline-block">
+                  Featured
+                </span>
+              )}
+              <div className="flex items-start gap-4">
+                <span className="text-3xl">{demo.emoji}</span>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg font-bold mb-1">{demo.title}</h3>
+                  <p className="text-sm text-kf-muted leading-relaxed mb-3">{demo.description}</p>
+
+                  <div className="grid grid-cols-3 gap-2 mb-3">
+                    {demo.results.map((r) => (
+                      <div key={r.label} className="bg-kf-bg rounded-lg p-2 text-center">
+                        <div className="text-lg font-extrabold text-kf-accent">{r.number}</div>
+                        <div className="text-[9px] text-kf-muted mt-0.5">{r.label}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex gap-2">
+                    {demo.papers.map((p) => (
+                      <span key={p} className="text-[9px] text-kf-muted bg-kf-bg rounded px-2 py-0.5">{p}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </a>
+          ))}
         </div>
       </section>
 
@@ -159,6 +263,16 @@ export default function HomePage() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* Real World Results */}
+      <section className="max-w-4xl mx-auto px-6 py-16">
+        <div className="flex items-center gap-4 mb-12">
+          <div className="flex-1 h-px bg-kf-border" />
+          <span className="text-xs text-kf-muted font-medium uppercase tracking-widest">Real World Results</span>
+          <div className="flex-1 h-px bg-kf-border" />
+        </div>
+        <LiveResults />
       </section>
 
       {/* Who is behind this */}

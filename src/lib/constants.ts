@@ -13,6 +13,10 @@ export const LINKS = {
   gpuBench: "https://gpubench.dev",
   transformerBench: "https://gpubench.dev/transformer",
 
+  // Demos
+  flappyDemo: "https://gpubench.dev/flappy",
+  swarmDemo: "https://gpubench.dev/swarm",
+
   // Sites
   site: "https://kernelfusion.dev",
 } as const;

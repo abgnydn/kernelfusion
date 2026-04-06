@@ -7,24 +7,24 @@ const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700", "
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kernelfusion.dev"),
-  title: "Kernel Fusion — GPU frameworks waste 92% of their time. I fixed it.",
-  description: "Hand-fused GPU kernels achieve 720× on sequential compute and 458× on transformer inference over framework dispatch. Two published preprints. Zero install — runs in any browser.",
+  title: "Kernel Fusion — GPU frameworks waste 92% or more of their time. I fixed it.",
+  description: "Real-world kernel fusion: 4,081× on Apple Silicon, 826× on phones, 70× on NVIDIA. 487 devices tested. Two published preprints. Zero install — runs in any browser.",
   keywords: [
     "kernel fusion", "WebGPU", "GPU computing", "transformer inference",
     "compute shaders", "WGSL", "browser AI", "LLM inference",
   ],
   openGraph: {
-    title: "Kernel Fusion — GPU frameworks waste 92% of their time. I fixed it.",
-    description: "720× on sequential compute. 458× on transformer inference. Two preprints. Zero install.",
+    title: "Kernel Fusion — GPU frameworks waste 92% or more of their time. I fixed it.",
+    description: "4,081× on Apple Silicon, 826× on phones. 487 devices tested. Two preprints. Zero install.",
     type: "website",
     url: "https://kernelfusion.dev",
     siteName: "Kernel Fusion",
-    images: [{ url: "/og.svg", width: 1200, height: 630, alt: "Kernel Fusion — 720× sequential, 458× transformer" }],
+    images: [{ url: "/og.svg", width: 1200, height: 630, alt: "Kernel Fusion — 4,081× Apple Silicon, 826× phones, 487 devices" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kernel Fusion — GPU frameworks waste 92% of their time",
-    description: "720× sequential compute. 458× transformer inference. Zero install.",
+    title: "Kernel Fusion — GPU frameworks waste 92% or more of their time",
+    description: "4,081× Apple Silicon, 826× phones. 487 devices tested. Zero install.",
     images: ["/og.svg"],
   },
 };

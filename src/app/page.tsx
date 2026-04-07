@@ -12,7 +12,7 @@ const demos = [
       { number: "P2P", label: "WebRTC genome exchange" },
     ],
     href: LINKS.flappyDemo,
-    papers: ["Paper 1 (kernel fusion)", "Paper 3 (distributed P2P)"],
+    papers: ["Paper 1 (kernel fusion)", "P2P (WebRTC)"],
   },
   {
     emoji: "📊",

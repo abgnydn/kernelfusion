@@ -25,4 +25,6 @@ export const LINKS = {
 
   // Sites
   site: "https://kernelfusion.dev",
+  webgpuDna: "https://webgpu-dna.vercel.app",
+  zerotvm: "https://zerotvm.com",
 } as const;

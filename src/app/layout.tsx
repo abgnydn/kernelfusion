@@ -29,11 +29,57 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://kernelfusion.dev#app",
+      "name": "Kernel Fusion",
+      "url": "https://kernelfusion.dev",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any (WebGPU browser)",
+      "description": "Single-kernel fusion for GPU workloads. 4,081× on Apple Silicon, 826× on phones. 487 devices tested.",
+      "author": { "@id": "https://kernelfusion.dev#author" },
+      "isPartOf": {
+        "@type": "CreativeWork",
+        "name": "Kernel-fusion research line",
+        "url": "https://kernelfusion.dev"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://kernelfusion.dev#author",
+      "name": "Ahmet Baris Gunaydin",
+      "url": "https://kernelfusion.dev",
+      "sameAs": [
+        "https://kernelfusion.dev",
+        "https://gpubench.dev",
+        "https://zerotvm.com",
+        "https://webgpu-dna.vercel.app",
+        "https://github.com/abgnydn",
+        "https://www.linkedin.com/in/abgnydn/"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://kernelfusion.dev#site",
+      "url": "https://kernelfusion.dev",
+      "name": "kernelfusion.dev",
+      "publisher": { "@id": "https://kernelfusion.dev#author" }
+    }
+  ]
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body className={`${inter.className} min-h-screen`}>{children}<Analytics /></body>
     </html>

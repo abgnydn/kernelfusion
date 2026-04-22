@@ -114,8 +114,8 @@ export default function HomePage() {
           <a href="#demos" className="hover:text-kf-text transition">Demos</a>
           <a href="#research" className="hover:text-kf-text transition">Research</a>
           <a href="#sdk" className="hover:text-kf-text transition">SDK</a>
+          <a href="#applied" className="hover:text-kf-text transition">Applied</a>
           <a href={LINKS.gpuBench} className="hover:text-kf-text transition">Benchmarks</a>
-          <a href={LINKS.results} className="hover:text-kf-text transition">All Results</a>
         </div>
       </nav>
 
@@ -336,6 +336,61 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Applied: where the fusion pattern is used */}
+      <section id="applied" className="max-w-4xl mx-auto px-6 py-16">
+        <div className="flex items-center gap-4 mb-12">
+          <div className="flex-1 h-px bg-kf-border" />
+          <span className="text-xs text-kf-muted font-medium uppercase tracking-widest">Applied</span>
+          <div className="flex-1 h-px bg-kf-border" />
+        </div>
+
+        <p className="text-sm text-kf-muted text-center max-w-2xl mx-auto mb-8 leading-relaxed">
+          The single-kernel fusion pattern generalizes. Two projects apply it to different domains &mdash;
+          LLM inference and radiobiology Monte Carlo &mdash; and one runs the companion benchmark suite.
+        </p>
+
+        <div className="grid md:grid-cols-3 gap-4">
+          <a href={LINKS.gpuBench} target="_blank" rel="noopener"
+             className="card block transition hover:border-kf-accent/30">
+            <span className="text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded-full bg-kf-cyan/10 text-kf-cyan mb-3 inline-block">
+              Benchmarks
+            </span>
+            <h3 className="text-lg font-bold mb-2">gpubench.dev</h3>
+            <p className="text-xs text-kf-muted leading-relaxed mb-3">
+              &ldquo;How fast is your GPU in the browser?&rdquo; Open WebGPU compute benchmarks on 487 real
+              devices &mdash; Rastrigin, N-body, Monte Carlo Pi, RL environments.
+            </p>
+            <span className="text-xs font-medium text-kf-accent">Benchmark your GPU &rarr;</span>
+          </a>
+
+          <a href={LINKS.zerotvm} target="_blank" rel="noopener"
+             className="card block transition hover:border-kf-accent/30">
+            <span className="text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded-full bg-kf-accent/10 text-kf-accent mb-3 inline-block">
+              LLM inference
+            </span>
+            <h3 className="text-lg font-bold mb-2">zerotvm.com</h3>
+            <p className="text-xs text-kf-muted leading-relaxed mb-3">
+              Phi-3 (3.6B) in the browser on 10 hand-written WGSL shaders, replacing the 85 auto-generated
+              ones TVM/WebLLM needs. 792 lines of GPU code, 14 KB JS bundle.
+            </p>
+            <span className="text-xs font-medium text-kf-accent">Run it live &rarr;</span>
+          </a>
+
+          <a href={LINKS.webgpuDna} target="_blank" rel="noopener"
+             className="card block transition hover:border-kf-accent/30">
+            <span className="text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded-full bg-kf-green/10 text-kf-green mb-3 inline-block">
+              Radiobiology
+            </span>
+            <h3 className="text-lg font-bold mb-2">webgpu-dna.vercel.app</h3>
+            <p className="text-xs text-kf-muted leading-relaxed mb-3">
+              Geant4-DNA electron track-structure Monte Carlo in the browser. One fused dispatch, one
+              thread per primary, full history inline. Live radiolysis chemistry + DNA damage scoring.
+            </p>
+            <span className="text-xs font-medium text-kf-accent">See the simulation &rarr;</span>
+          </a>
+        </div>
+      </section>
+
       {/* Who is behind this */}
       <section className="max-w-3xl mx-auto px-6 py-16">
         <div className="card text-center">
@@ -343,10 +398,12 @@ export default function HomePage() {
           <p className="text-sm text-kf-muted leading-relaxed max-w-lg mx-auto">
             Independent Researcher
           </p>
-          <div className="flex gap-3 justify-center mt-4">
+          <div className="flex gap-3 justify-center mt-4 flex-wrap">
             <a href="https://github.com/abgnydn" target="_blank" rel="noopener" className="btn-secondary text-xs">GitHub</a>
             <a href="https://www.linkedin.com/in/abgnydn/" target="_blank" rel="noopener" className="btn-secondary text-xs">LinkedIn</a>
             <a href={LINKS.gpuBench} className="btn-secondary text-xs">gpubench.dev</a>
+            <a href={LINKS.zerotvm} target="_blank" rel="noopener" className="btn-secondary text-xs">zerotvm.com</a>
+            <a href={LINKS.webgpuDna} target="_blank" rel="noopener" className="btn-secondary text-xs">webgpu-dna</a>
           </div>
         </div>
       </section>
@@ -357,9 +414,9 @@ export default function HomePage() {
           <span className="font-semibold text-kf-text">kernelfusion.dev</span>
           <div className="flex gap-5">
             <a href="/why" className="hover:text-kf-text transition">Why this matters</a>
-            <a href={LINKS.transformerBench} className="hover:text-kf-text transition">Transformer Bench</a>
-            <a href={LINKS.gpuBench} className="hover:text-kf-text transition">GPU Bench</a>
-            <a href={LINKS.results} className="hover:text-kf-text transition">All Results</a>
+            <a href={LINKS.gpuBench} className="hover:text-kf-text transition">gpubench.dev</a>
+            <a href={LINKS.zerotvm} target="_blank" rel="noopener" className="hover:text-kf-text transition">zerotvm.com</a>
+            <a href={LINKS.webgpuDna} target="_blank" rel="noopener" className="hover:text-kf-text transition">webgpu-dna</a>
             <a href={LINKS.siteRepo} className="hover:text-kf-text transition">GitHub</a>
             <span>MIT License</span>
           </div>

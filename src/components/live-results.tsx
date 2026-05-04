@@ -42,13 +42,19 @@ function timeAgo(dateStr: string): string {
   return `${days}d ago`;
 }
 
+// Fallback values use medians from the gpubench DB snapshot 2026-05-04.
+// Peak values exclude Safari-on-macOS measurement artifacts (where the
+// unfused baseline stalls and produces inflated speedups in the 1k-79k×
+// range). The honest peak is the max of the cleaned distribution.
+// Field name `avgSpeedup` is a misnomer — it now holds median, not mean.
+// Rename pending; update API contract first.
 const FALLBACK: LiveData = {
-  total: 487,
+  total: 92,
   vendors: [
-    { name: "Apple Silicon", runs: 0, avgSpeedup: 4081, peakSpeedup: 79021 },
-    { name: "Qualcomm Adreno", runs: 0, avgSpeedup: 826, peakSpeedup: 13541 },
-    { name: "NVIDIA", runs: 0, avgSpeedup: 70, peakSpeedup: 159 },
-    { name: "ARM Mali", runs: 0, avgSpeedup: 55, peakSpeedup: 0 },
+    { name: "Apple Silicon", runs: 65, avgSpeedup: 71, peakSpeedup: 226 },
+    { name: "NVIDIA", runs: 56, avgSpeedup: 56, peakSpeedup: 402 },
+    { name: "ARM Mali", runs: 14, avgSpeedup: 55, peakSpeedup: 120 },
+    { name: "Qualcomm Adreno", runs: 29, avgSpeedup: 20, peakSpeedup: 103 },
   ],
   mobile: { runs: 36, avgTokensPerSec: 15000, peakTokensPerSec: 213000 },
   browsers: { Chrome: 347, Firefox: 69, Safari: 62 },
@@ -140,11 +146,11 @@ export function LiveResults() {
         )}
       </div>
 
-      <h3 className="text-xl font-bold mb-2">Real-world speedups are larger than the paper</h3>
+      <h3 className="text-xl font-bold mb-2">Real-world distribution across 7 GPU vendors</h3>
       <p className="text-sm text-kf-muted leading-relaxed mb-6">
         {live
-          ? `Live from gpubench.dev. ${data.total.toLocaleString()} people have run the transformer benchmark on their own devices.`
-          : "Since publishing, 487 people have run the benchmarks on their own devices."}
+          ? `Live from gpubench.dev. ${data.total.toLocaleString()} unique devices have run the transformer benchmark across 7 GPU vendors. Medians shown (means are skewed by Safari-on-macOS measurement artifacts).`
+          : "Since publishing, 92 unique devices across 7 GPU vendors have run the benchmarks. Medians shown."}
       </p>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
@@ -153,7 +159,7 @@ export function LiveResults() {
             <div className="text-2xl font-extrabold text-kf-accent">
               {v.avgSpeedup.toLocaleString()}&times;
             </div>
-            <div className="text-[10px] text-kf-muted mt-1">{v.name} avg</div>
+            <div className="text-[10px] text-kf-muted mt-1">{v.name} median</div>
             {v.peakSpeedup > v.avgSpeedup && (
               <div className="text-[9px] text-kf-muted/60 mt-0.5">
                 peak {v.peakSpeedup.toLocaleString()}&times;

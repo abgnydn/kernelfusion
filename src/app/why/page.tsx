@@ -3,18 +3,18 @@ import { LINKS } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Why Kernel Fusion Matters — kernelfusion.dev",
-  description: "GPU frameworks waste 92% or more of their time on dispatch overhead. I eliminated it. 487 devices tested. Here's what that means for everyone.",
+  description: "GPU frameworks waste 92% or more of their time on dispatch overhead. I eliminated it. 92 unique devices across 7 GPU vendors. Here's what that means for everyone.",
 };
 
 const beforeAfter = [
-  { before: "ChatGPT in your browser types 5 words per second. You assume your laptop isn't powerful enough.", after: "Your GPU was idle 92%+ of the time. The waiting is eliminated. Same GPU, 55-4,081\u00D7 faster." },
+  { before: "ChatGPT in your browser types 5 words per second. You assume your laptop isn't powerful enough.", after: "Your GPU was idle 92%+ of the time. The waiting is eliminated. Same GPU, 20-71\u00D7 faster on typical devices, peaking 226-402\u00D7 on best." },
   { before: "Running AI locally means installing Python, CUDA, PyTorch, downloading model weights, debugging driver conflicts.", after: "Open a browser tab. That's it. The AI runs on the GPU you already have, at near-native speed." },
   { before: "Every AI feature costs $2-4/hour in cloud GPU. 100K users = $50K/month in servers.", after: "The user's GPU does the work. Server cost: $0. The browser IS the infrastructure." },
   { before: "A student in rural India can't afford a GPU cluster or cloud API credits to learn AI.", after: "A $300 phone with Chrome can run transformer inference locally. No internet needed after model download." },
 ];
 
 const personas = [
-  { icon: "\u{1F4AC}", title: "Anyone who uses AI chatbots", desc: "Browser-based AI assistants could respond 55-4,081\u00D7 faster. Not by buying better hardware \u2014 by fixing how the software talks to your GPU." },
+  { icon: "\u{1F4AC}", title: "Anyone who uses AI chatbots", desc: "Browser-based AI assistants could respond 20-71\u00D7 faster on typical devices (peaks 226\u00D7 on Apple Silicon, 402\u00D7 on NVIDIA). Not by buying better hardware \u2014 by fixing how the software talks to your GPU." },
   { icon: "\u{1F3EB}", title: "Teachers and students", desc: "Run AI models live in the classroom. Every student's laptop becomes an AI workstation. No lab, no cloud account, no IT department." },
   { icon: "\u{1F52C}", title: "AI researchers", desc: "Ship a live demo of your model as a URL. Reviewers run it in their browser instead of fighting with your Docker container." },
   { icon: "\u{1F680}", title: "Startups building AI products", desc: "Add AI features to your web app without GPU servers. Your users' devices do the compute. Scale to millions at zero marginal cost." },
@@ -25,7 +25,7 @@ const personas = [
 const steps = [
   { title: "The problem: 92%+ overhead", desc: "GPU frameworks (PyTorch, JAX, WebLLM) send one small task to the GPU, wait for it to finish, send the next one. For a 64-token generation with 4 layers, that's 1,024 separate round-trips. Each round-trip takes longer than the actual math." },
   { title: "The fix: one dispatch", desc: "Pack the entire computation \u2014 all tokens, all layers, all operations \u2014 into a single GPU instruction. The GPU loops internally. No round-trips. No waiting. Same math, same result." },
-  { title: "The proof: 487 devices", desc: "Two preprints, then 487 people ran it on their own hardware. Apple Silicon averages 4,081\u00D7. Android phones average 826\u00D7. NVIDIA desktops average 70\u00D7. Tested across Chrome, Firefox, Safari on macOS, Windows, Linux, Android, and iOS." },
+  { title: "The proof: 92 unique devices, 7 vendors", desc: "Two preprints, then 92 unique devices ran it across 7 GPU vendors. Median speedups (the typical experience): Apple Silicon 71\u00D7, NVIDIA 56\u00D7, ARM Mali 55\u00D7, Intel 43\u00D7, AMD 40\u00D7, Qualcomm Adreno 20\u00D7. Tested across Chrome, Firefox, Safari on macOS, Windows, Linux, Android, and iOS." },
   { title: "The result: AI on a phone", desc: "213,000 tokens per second peak on a phone. 15,000 average across all mobile devices. No Python, no CUDA, no cloud. A browser tab outperforms PyTorch on the same hardware." },
 ];
 
@@ -56,7 +56,7 @@ export default function WhyPage() {
           </h1>
           <p className="text-lg text-kf-muted max-w-lg mx-auto">
             GPU frameworks waste 92% or more of their time on overhead &mdash; sending tasks one by one
-            instead of all at once. I proved it, fixed it, and 487 people confirmed it on their own devices.
+            instead of all at once. I proved it, fixed it, and 92 unique devices across 7 GPU vendors confirmed it.
           </p>
         </header>
 
@@ -64,8 +64,8 @@ export default function WhyPage() {
         <section className="py-16 border-t border-kf-border/50">
           <div className="grid grid-cols-3 gap-4">
             {[
-              { number: "4,081\u00D7", label: "Apple Silicon average\n487 real-world runs" },
-              { number: "826\u00D7", label: "Android phones average\nQualcomm Adreno" },
+              { number: "71\u00D7", label: "Apple Silicon median\n92 unique devices, 7 vendors" },
+              { number: "20\u00D7", label: "Qualcomm Adreno median\nAndroid phones" },
               { number: "0", label: "things to install\njust open Chrome" },
             ].map((s) => (
               <div key={s.number} className="card text-center py-8">
@@ -148,19 +148,19 @@ export default function WhyPage() {
               </p>
             </div>
             <div className="card">
-              <h3 className="font-semibold mb-2">487 people ran it on everything else</h3>
+              <h3 className="font-semibold mb-2">92 unique devices ran it on everything else</h3>
               <p className="text-sm text-kf-muted leading-relaxed">
-                Phones, tablets, Chromebooks, gaming rigs, office laptops. Devices with GPUs that were never designed for compute workloads. These GPUs have much worse dispatch overhead than the ones in the paper.
+                Phones, tablets, Chromebooks, gaming rigs, office laptops &mdash; across 7 GPU vendors and 4 operating systems.
+                Devices with GPUs that were never designed for compute workloads. These GPUs have much worse dispatch overhead than the ones in the paper.
               </p>
             </div>
             <div className="card">
-              <h3 className="font-semibold mb-2">Worse overhead = bigger gain from fusion</h3>
+              <h3 className="font-semibold mb-2">The mechanism is hardware-agnostic</h3>
               <p className="text-sm text-kf-muted leading-relaxed">
-                Kernel fusion eliminates dispatch overhead. So the worse a device is at dispatching, the more it benefits.
-                NVIDIA desktop GPUs (good dispatching) see ~70&times;.
-                Apple Silicon laptops see ~4,081&times;.
-                Android phones (Qualcomm Adreno) see ~826&times;.
-                This is not a bug &mdash; it&apos;s the point. The devices that need fusion most, benefit from it most.
+                Kernel fusion eliminates dispatch overhead. The mechanism holds across every vendor we&apos;ve tested.
+                Median speedup (the typical experience): NVIDIA 56&times;, Apple Silicon 71&times;, ARM Mali 55&times;, Intel 43&times;, AMD 40&times;, Qualcomm Adreno 20&times;.
+                Peak observed: 402&times; on NVIDIA, 226&times; on Apple Silicon, 103&times; on Qualcomm.
+                Smaller in relative terms on phones because absolute throughput is lower &mdash; but still an order of magnitude faster than unfused.
               </p>
             </div>
           </div>

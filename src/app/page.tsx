@@ -1,5 +1,23 @@
-import { LINKS } from "@/lib/constants";
+import { LINKS, SITES, CROSSLINKS, type SiteInfo } from "@/lib/constants";
 import { LiveResults } from "@/components/live-results";
+
+// Flagship = webgpudna (by CROSSLINKS.kernelfusion[0]).
+// Adjacent = the remaining siblings rendered as a 3-col grid.
+// Widen from the literal narrow union back to SiteInfo so optional fields
+// (stats, cta, badge, githubRepo) behave as optional everywhere downstream.
+const FLAGSHIP: SiteInfo = SITES[CROSSLINKS.kernelfusion[0]];
+const ADJACENT: SiteInfo[] = CROSSLINKS.kernelfusion.slice(1).map((k) => SITES[k]);
+// Category badge styles — fixed Tailwind class strings so the JIT picks them up.
+const CATEGORY_BADGE: Record<string, string> = {
+  Benchmarks: "bg-kf-cyan/10 text-kf-cyan",
+  "LLM inference": "bg-kf-accent/10 text-kf-accent",
+  Visualization: "bg-kf-red/10 text-kf-red",
+  Radiobiology: "bg-kf-green/10 text-kf-green",
+  Theory: "bg-kf-accent/10 text-kf-accent",
+  Personal: "bg-kf-muted/10 text-kf-muted",
+  Utility: "bg-kf-muted/10 text-kf-muted",
+  Tooling: "bg-kf-muted/10 text-kf-muted",
+};
 
 const demos = [
   {
@@ -21,7 +39,7 @@ const demos = [
     results: [
       { number: "170", label: "gen/s (M2 Pro)" },
       { number: "400", label: "gen/s (RTX 3090)" },
-      { number: "4,081\u00D7", label: "real-world avg (Apple Silicon)" },
+      { number: "71\u00D7", label: "real-world median (Apple Silicon)" },
     ],
     href: LINKS.gpuBench,
     papers: ["Paper 1 (kernel fusion)"],
@@ -130,8 +148,9 @@ export default function HomePage() {
         </h1>
         <p className="text-lg text-kf-muted max-w-2xl mx-auto mb-8">
           Kernel fusion eliminates per-dispatch overhead by packing entire computations into
-          single GPU instructions. 487 real-world devices tested — up to 4,081&times; on Apple
-          Silicon, 826&times; on phones. Zero installation. Any browser.
+          single GPU instructions. 92 real-world devices across 7 GPU vendors — median 71&times; on
+          Apple Silicon, 56&times; on NVIDIA, 20&times; on phones; peaks 226&times; / 402&times; / 103&times;.
+          Zero installation. Any browser.
         </p>
         <div className="flex flex-wrap gap-3 justify-center">
           <a href={LINKS.flappyDemo} className="btn-primary">Flappy Evolution Demo</a>
@@ -292,27 +311,27 @@ export default function HomePage() {
             </span>
           </div>
 
-          <h3 className="text-xl font-bold mb-1">@wgpu-fusion/core</h3>
+          <h3 className="text-xl font-bold mb-1">@webgpu-fusion/core</h3>
           <p className="text-sm text-kf-muted mb-4">
             One import. One dispatch. All tokens, all layers, all operations fused into a single GPU kernel.
           </p>
 
           <div className="bg-kf-bg rounded-lg p-4 font-mono text-xs text-kf-muted mb-4">
-            <p className="text-kf-muted/50">npm install @wgpu-fusion/core</p>
+            <p className="text-kf-muted/50">npm install @webgpu-fusion/core</p>
             <p className="mt-3 text-kf-muted/50">{"// 3 lines to benchmark your GPU"}</p>
-            <p><span className="text-kf-cyan">import</span> {"{ FusedTransformer }"} <span className="text-kf-cyan">from</span> <span className="text-kf-green">{`'@wgpu-fusion/core'`}</span></p>
+            <p><span className="text-kf-cyan">import</span> {"{ FusedTransformer }"} <span className="text-kf-cyan">from</span> <span className="text-kf-green">{`'@webgpu-fusion/core'`}</span></p>
             <p><span className="text-kf-cyan">const</span> model = <span className="text-kf-cyan">await</span> FusedTransformer.create({"{ dModel: 128, nHeads: 2, nLayers: 4 }"})</p>
             <p><span className="text-kf-cyan">const</span> stats = <span className="text-kf-cyan">await</span> model.benchmark({"{ runs: 10 }"})</p>
           </div>
 
           <div className="grid grid-cols-3 gap-3 mb-4">
             <div className="bg-kf-bg rounded-lg p-3 text-center">
-              <div className="text-lg font-extrabold text-kf-accent">4,081&times;</div>
-              <div className="text-[10px] text-kf-muted mt-1">Apple Silicon avg</div>
+              <div className="text-lg font-extrabold text-kf-accent">71&times;</div>
+              <div className="text-[10px] text-kf-muted mt-1">Apple Silicon median</div>
             </div>
             <div className="bg-kf-bg rounded-lg p-3 text-center">
-              <div className="text-lg font-extrabold text-kf-accent">826&times;</div>
-              <div className="text-[10px] text-kf-muted mt-1">Android phones avg</div>
+              <div className="text-lg font-extrabold text-kf-accent">20&times;</div>
+              <div className="text-[10px] text-kf-muted mt-1">Android phones median</div>
             </div>
             <div className="bg-kf-bg rounded-lg p-3 text-center">
               <div className="text-lg font-extrabold text-kf-accent">0</div>
@@ -344,50 +363,67 @@ export default function HomePage() {
           <div className="flex-1 h-px bg-kf-border" />
         </div>
 
-        <p className="text-sm text-kf-muted text-center max-w-2xl mx-auto mb-8 leading-relaxed">
-          The single-kernel fusion pattern generalizes. Two projects apply it to different domains &mdash;
-          LLM inference and radiobiology Monte Carlo &mdash; and one runs the companion benchmark suite.
+        <p className="text-sm text-kf-muted text-center max-w-2xl mx-auto mb-10 leading-relaxed">
+          The single-kernel fusion pattern generalises beyond synthetic benchmarks. The flagship
+          application ports a production scientific toolkit &mdash; Geant4-DNA (CNRS/IN2P3) &mdash;
+          to the browser. Three adjacent projects apply the same pattern to LLM inference,
+          LLM visualisation, and open GPU benchmarking.
         </p>
 
+        {/* Flagship: webgpudna */}
+        <a href={FLAGSHIP.url} target="_blank" rel="noopener"
+           className="card block transition hover:border-kf-green/50 mb-6 ring-1 ring-kf-green/20">
+          <div className="flex items-center gap-2 mb-3 flex-wrap">
+            <span className="text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded-full bg-kf-green/15 text-kf-green">
+              Flagship implementation
+            </span>
+            <span className="text-[10px] text-kf-muted">{FLAGSHIP.category} &middot; Monte Carlo</span>
+          </div>
+
+          <h3 className="text-2xl font-bold mb-1">{FLAGSHIP.domain}</h3>
+          <p className="text-sm text-kf-muted leading-relaxed mb-5">
+            {FLAGSHIP.shortDesc} The &ldquo;one dispatch, full history&rdquo; shape is the same kernel-fusion
+            pattern that gives 3&ndash;4 orders of magnitude of speedup on launch-bound workloads &mdash;
+            here it&apos;s what makes real Monte Carlo radiobiology cheap enough to run live in a browser tab.
+          </p>
+
+          {FLAGSHIP.stats && (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
+              {FLAGSHIP.stats.map((s) => (
+                <div key={s.label} className="bg-kf-bg rounded-lg p-3 text-center">
+                  <div className="text-lg font-extrabold text-kf-green">{s.value}</div>
+                  <div className="text-[9px] text-kf-muted mt-1">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <p className="text-xs text-kf-muted leading-relaxed mb-3">
+            Full tabulated cross sections from G4EMLOW 8.8: Born ionisation, Emfietzoglou excitation,
+            Champion elastic CDF, Sanche vibrational. Karamitros 2011 9-reaction IRT radiolysis.
+            Direct + indirect SSB scoring against a 21&times;21 parallel B-DNA fiber grid.
+            Validated at 8 energies (100 eV &ndash; 20 keV).
+          </p>
+
+          <span className="text-sm font-medium text-kf-green">{FLAGSHIP.cta}</span>
+        </a>
+
+        {/* Adjacent applications */}
         <div className="grid md:grid-cols-3 gap-4">
-          <a href={LINKS.gpuBench} target="_blank" rel="noopener"
-             className="card block transition hover:border-kf-accent/30">
-            <span className="text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded-full bg-kf-cyan/10 text-kf-cyan mb-3 inline-block">
-              Benchmarks
-            </span>
-            <h3 className="text-lg font-bold mb-2">gpubench.dev</h3>
-            <p className="text-xs text-kf-muted leading-relaxed mb-3">
-              &ldquo;How fast is your GPU in the browser?&rdquo; Open WebGPU compute benchmarks on 487 real
-              devices &mdash; Rastrigin, N-body, Monte Carlo Pi, RL environments.
-            </p>
-            <span className="text-xs font-medium text-kf-accent">Benchmark your GPU &rarr;</span>
-          </a>
-
-          <a href={LINKS.zerotvm} target="_blank" rel="noopener"
-             className="card block transition hover:border-kf-accent/30">
-            <span className="text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded-full bg-kf-accent/10 text-kf-accent mb-3 inline-block">
-              LLM inference
-            </span>
-            <h3 className="text-lg font-bold mb-2">zerotvm.com</h3>
-            <p className="text-xs text-kf-muted leading-relaxed mb-3">
-              Phi-3 (3.6B) in the browser on 10 hand-written WGSL shaders, replacing the 85 auto-generated
-              ones TVM/WebLLM needs. 792 lines of GPU code, 14 KB JS bundle.
-            </p>
-            <span className="text-xs font-medium text-kf-accent">Run it live &rarr;</span>
-          </a>
-
-          <a href={LINKS.webgpuDna} target="_blank" rel="noopener"
-             className="card block transition hover:border-kf-accent/30">
-            <span className="text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded-full bg-kf-green/10 text-kf-green mb-3 inline-block">
-              Radiobiology
-            </span>
-            <h3 className="text-lg font-bold mb-2">webgpu-dna.vercel.app</h3>
-            <p className="text-xs text-kf-muted leading-relaxed mb-3">
-              Geant4-DNA electron track-structure Monte Carlo in the browser. One fused dispatch, one
-              thread per primary, full history inline. Live radiolysis chemistry + DNA damage scoring.
-            </p>
-            <span className="text-xs font-medium text-kf-accent">See the simulation &rarr;</span>
-          </a>
+          {ADJACENT.map((site) => {
+            const badge = CATEGORY_BADGE[site.category] ?? "bg-kf-accent/10 text-kf-accent";
+            return (
+              <a key={site.key} href={site.url} target="_blank" rel="noopener"
+                 className="card block transition hover:border-kf-accent/30">
+                <span className={`text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded-full mb-3 inline-block ${badge}`}>
+                  {site.category}
+                </span>
+                <h3 className="text-lg font-bold mb-2">{site.domain}</h3>
+                <p className="text-xs text-kf-muted leading-relaxed mb-3">{site.shortDesc}</p>
+                <span className="text-xs font-medium text-kf-accent">{site.cta}</span>
+              </a>
+            );
+          })}
         </div>
       </section>
 
@@ -401,9 +437,10 @@ export default function HomePage() {
           <div className="flex gap-3 justify-center mt-4 flex-wrap">
             <a href="https://github.com/abgnydn" target="_blank" rel="noopener" className="btn-secondary text-xs">GitHub</a>
             <a href="https://www.linkedin.com/in/abgnydn/" target="_blank" rel="noopener" className="btn-secondary text-xs">LinkedIn</a>
-            <a href={LINKS.gpuBench} className="btn-secondary text-xs">gpubench.dev</a>
-            <a href={LINKS.zerotvm} target="_blank" rel="noopener" className="btn-secondary text-xs">zerotvm.com</a>
-            <a href={LINKS.webgpuDna} target="_blank" rel="noopener" className="btn-secondary text-xs">webgpu-dna</a>
+            <a href={SITES.webgpudna.url} target="_blank" rel="noopener" className="btn-secondary text-xs">{SITES.webgpudna.domain}</a>
+            <a href={SITES.gpubench.url} className="btn-secondary text-xs">{SITES.gpubench.domain}</a>
+            <a href={SITES.zerotvm.url} target="_blank" rel="noopener" className="btn-secondary text-xs">{SITES.zerotvm.domain}</a>
+            <a href={SITES.neuropulse.url} target="_blank" rel="noopener" className="btn-secondary text-xs">{SITES.neuropulse.domain}</a>
           </div>
         </div>
       </section>
@@ -412,11 +449,12 @@ export default function HomePage() {
       <footer className="border-t border-kf-border/50">
         <div className="max-w-4xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-kf-muted">
           <span className="font-semibold text-kf-text">kernelfusion.dev</span>
-          <div className="flex gap-5">
+          <div className="flex gap-5 flex-wrap justify-center">
             <a href="/why" className="hover:text-kf-text transition">Why this matters</a>
-            <a href={LINKS.gpuBench} className="hover:text-kf-text transition">gpubench.dev</a>
-            <a href={LINKS.zerotvm} target="_blank" rel="noopener" className="hover:text-kf-text transition">zerotvm.com</a>
-            <a href={LINKS.webgpuDna} target="_blank" rel="noopener" className="hover:text-kf-text transition">webgpu-dna</a>
+            <a href={SITES.webgpudna.url} target="_blank" rel="noopener" className="hover:text-kf-text transition">{SITES.webgpudna.domain}</a>
+            <a href={SITES.gpubench.url} className="hover:text-kf-text transition">{SITES.gpubench.domain}</a>
+            <a href={SITES.zerotvm.url} target="_blank" rel="noopener" className="hover:text-kf-text transition">{SITES.zerotvm.domain}</a>
+            <a href={SITES.neuropulse.url} target="_blank" rel="noopener" className="hover:text-kf-text transition">{SITES.neuropulse.domain}</a>
             <a href={LINKS.siteRepo} className="hover:text-kf-text transition">GitHub</a>
             <span>MIT License</span>
           </div>

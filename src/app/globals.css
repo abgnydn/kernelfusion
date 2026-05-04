@@ -20,6 +20,14 @@
   --kf-muted: #71717a;
   --kf-accent: #f59e0b;
   --kf-cyan: #22d3ee;
+
+  /* ── canonical cross-site alias layer (see ~/sites-shared/tokens.css) ── */
+  --bg:      var(--kf-bg);
+  --surface: var(--kf-surface);
+  --border:  var(--kf-border);
+  --text:    var(--kf-text);
+  --muted:   var(--kf-muted);
+  --accent:  var(--kf-accent);
 }
 
 * { box-sizing: border-box; }

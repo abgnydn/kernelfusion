@@ -6,15 +6,17 @@ Research umbrella for GPU kernel fusion — eliminating per-dispatch overhead ac
 
 ## Research
 
-### Paper 1: Sequential Fitness Evaluation (Published)
+### Paper 1: Sequential Fitness Evaluation (v6, published)
 - **159-720×** over PyTorch on the same GPU
 - Confirmed across CUDA, WebGPU, JAX/XLA, Triton
-- [Preprint](https://doi.org/10.5281/zenodo.19343570) · [Code](https://github.com/abgnydn/webgpu-kernel-fusion) · [Benchmarks](https://gpubench.dev)
+- 92 unique devices across 7 GPU vendors via [gpubench.dev](https://gpubench.dev)
+- [Preprint](https://doi.org/10.5281/zenodo.19331833) · [Code](https://github.com/abgnydn/webgpu-kernel-fusion)
 
-### Paper 2: Transformer Decoding (New)
-- **6.5-13.7×** fused vs unfused
-- 92% of wall-clock time is dispatch overhead
-- [Code](https://github.com/abgnydn/webgpu-transformer-fusion)
+### Paper 2: Transformer Decoding (v2, published)
+- **66-458×** parallel fused vs unfused dispatch (M2 Pro)
+- **6.6-13.5×** single-threaded fused
+- Cross-vendor median (gpubench.dev): 71× Apple, 56× NVIDIA, 20× Qualcomm
+- [Preprint](https://doi.org/10.5281/zenodo.19344276) · [Code](https://github.com/abgnydn/webgpu-transformer-fusion)
 
 ## Author
 

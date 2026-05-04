@@ -12,9 +12,11 @@ export { SITES, CROSSLINKS, AUTHOR, SAME_AS } from "./sites";
 export type { SiteKey, SiteInfo } from "./sites";
 
 export const LINKS = {
-  // Papers
-  ecPaper: "https://doi.org/10.5281/zenodo.19343570",
-  transformerPaper: "https://doi.org/10.5281/zenodo.19344277",
+  // Papers — concept DOIs that auto-resolve to the latest version on Zenodo
+  // (currently v6 / v2 as of 2026-05-04). Concept DOIs are stable across
+  // future bumps; do not change to version-specific DOIs.
+  ecPaper: "https://doi.org/10.5281/zenodo.19331833",
+  transformerPaper: "https://doi.org/10.5281/zenodo.19344276",
 
   // Repos
   ecRepo: "https://github.com/abgnydn/webgpu-kernel-fusion",

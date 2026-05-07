@@ -8,15 +8,15 @@ const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700", "
 export const metadata: Metadata = {
   metadataBase: new URL("https://kernelfusion.dev"),
   alternates: { canonical: "/" },
-  title: "Kernel Fusion — GPU frameworks waste 92% or more of their time. I fixed it.",
-  description: "Real-world kernel fusion (medians): 71× on Apple Silicon, 56× on NVIDIA, 20× on phones. 92 unique devices, 7 GPU vendors. Two published preprints. Zero install — runs in any browser.",
+  title: "Kernel Fusion — single-dispatch fusion for WebGPU, measured on 92 devices",
+  description: "Cross-vendor medians, fused vs unfused on the same device: 71× Apple Silicon, 56× NVIDIA, 20× phones (92 unique devices, 7 GPU vendors). Two published preprints. Zero install — runs in any browser.",
   keywords: [
     "kernel fusion", "WebGPU", "GPU computing", "transformer inference",
     "compute shaders", "WGSL", "browser AI", "LLM inference",
   ],
   openGraph: {
-    title: "Kernel Fusion — GPU frameworks waste 92% or more of their time. I fixed it.",
-    description: "71× median Apple Silicon, 56× NVIDIA, 20× phones. 92 unique devices. Two preprints. Zero install.",
+    title: "Kernel Fusion — single-dispatch fusion for WebGPU",
+    description: "Fused vs unfused medians: 71× Apple Silicon, 56× NVIDIA, 20× phones. 92 unique devices, 7 vendors. Two preprints. Zero install.",
     type: "website",
     url: "https://kernelfusion.dev",
     siteName: "Kernel Fusion",
@@ -24,8 +24,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kernel Fusion — GPU frameworks waste 92% or more of their time",
-    description: "71× median Apple Silicon, 56× NVIDIA, 20× phones. 92 unique devices. Zero install.",
+    title: "Kernel Fusion — single-dispatch fusion for WebGPU",
+    description: "Fused vs unfused medians: 71× Apple Silicon, 56× NVIDIA, 20× phones. 92 unique devices. Zero install.",
     images: ["/og.png"],
   },
 };
@@ -40,7 +40,7 @@ const jsonLd = {
       "url": "https://kernelfusion.dev",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "Any (WebGPU browser)",
-      "description": "Single-kernel fusion for GPU workloads. 71× median on Apple Silicon, 56× on NVIDIA, 20× on phones. 92 unique devices across 7 GPU vendors.",
+      "description": "Single-dispatch kernel fusion for WebGPU. Cross-vendor medians, fused vs unfused on the same device: 71× Apple Silicon, 56× NVIDIA, 20× phones (92 unique devices, 7 GPU vendors).",
       "author": { "@id": "https://kernelfusion.dev#author" },
       "isPartOf": {
         "@type": "CreativeWork",

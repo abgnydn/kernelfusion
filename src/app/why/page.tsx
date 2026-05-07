@@ -3,7 +3,7 @@ import { LINKS } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Why Kernel Fusion Matters — kernelfusion.dev",
-  description: "GPU frameworks waste 92% or more of their time on dispatch overhead. I eliminated it. 92 unique devices across 7 GPU vendors. Here's what that means for everyone.",
+  description: "Naïve browser GPU pipelines waste 92%+ of their time on dispatch overhead. Kernel fusion eliminates it; I shipped it for WebGPU and measured the result on 92 unique devices across 7 GPU vendors.",
 };
 
 const beforeAfter = [
@@ -23,7 +23,7 @@ const personas = [
 ];
 
 const steps = [
-  { title: "The problem: 92%+ overhead", desc: "GPU frameworks (PyTorch, JAX, WebLLM) send one small task to the GPU, wait for it to finish, send the next one. For a 64-token generation with 4 layers, that's 1,024 separate round-trips. Each round-trip takes longer than the actual math." },
+  { title: "The problem: 92%+ overhead on naïve dispatch", desc: "Eager browser GPU pipelines (TF.js, hand-written WebGPU loops) send one small task to the GPU, wait for it to finish, send the next one. For a 64-token generation with 4 layers, that's 1,024 separate round-trips. Each round-trip takes longer than the actual math. Compilers like TVM, XLA, and Burn fuse some of this — but rarely the whole graph, and the WebGPU backend is the least-tuned target across the board." },
   { title: "The fix: one dispatch", desc: "Pack the entire computation \u2014 all tokens, all layers, all operations \u2014 into a single GPU instruction. The GPU loops internally. No round-trips. No waiting. Same math, same result." },
   { title: "The proof: 92 unique devices, 7 vendors", desc: "Two preprints, then 92 unique devices ran it across 7 GPU vendors. Median speedups (the typical experience): Apple Silicon 71\u00D7, NVIDIA 56\u00D7, ARM Mali 55\u00D7, Intel 43\u00D7, AMD 40\u00D7, Qualcomm Adreno 20\u00D7. Tested across Chrome, Firefox, Safari on macOS, Windows, Linux, Android, and iOS." },
   { title: "The result: AI on a phone", desc: "213,000 tokens per second peak on a phone. 15,000 average across all mobile devices. No Python, no CUDA, no cloud. A browser tab outperforms PyTorch on the same hardware." },
@@ -55,8 +55,9 @@ export default function WhyPage() {
             The software isn&apos;t.
           </h1>
           <p className="text-lg text-kf-muted max-w-lg mx-auto">
-            GPU frameworks waste 92% or more of their time on overhead &mdash; sending tasks one by one
-            instead of all at once. I proved it, fixed it, and 92 unique devices across 7 GPU vendors confirmed it.
+            Naïve browser GPU pipelines waste 92%+ of their time on dispatch overhead &mdash; sending tasks
+            one by one instead of all at once. Kernel fusion eliminates that. I shipped it for WebGPU and
+            measured the result across 92 unique devices and 7 GPU vendors.
           </p>
         </header>
 
@@ -161,6 +162,56 @@ export default function WhyPage() {
                 Median speedup (the typical experience): NVIDIA 56&times;, Apple Silicon 71&times;, ARM Mali 55&times;, Intel 43&times;, AMD 40&times;, Qualcomm Adreno 20&times;.
                 Peak observed: 402&times; on NVIDIA, 226&times; on Apple Silicon, 103&times; on Qualcomm.
                 Smaller in relative terms on phones because absolute throughput is lower &mdash; but still an order of magnitude faster than unfused.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Related work */}
+        <section className="py-16 border-t border-kf-border/50">
+          <h2 className="text-2xl font-bold mb-3">Related work</h2>
+          <p className="text-kf-muted mb-8 max-w-lg">
+            Kernel fusion isn&apos;t new. Here&apos;s the lineage and where this work fits.
+          </p>
+          <div className="space-y-4">
+            <div className="card">
+              <h3 className="font-semibold mb-2">Apache TVM / MLC-LLM / WebLLM <span className="text-xs text-kf-muted/70 font-normal">(since ~2020; WebLLM <a href="https://arxiv.org/abs/2412.15803" className="text-kf-accent hover:underline">arXiv:2412.15803</a>, Dec 2024)</span></h3>
+              <p className="text-sm text-kf-muted leading-relaxed">
+                TVM and MLC-LLM compile Python models through graph-level fusion down to WebGPU kernels.
+                WebLLM uses this stack to ship LLMs in the browser. This work fuses the entire autoregressive
+                decoder by hand in WGSL &mdash; no Python toolchain &mdash; and ablates the limit of single-dispatch fusion.
+              </p>
+            </div>
+            <div className="card">
+              <h3 className="font-semibold mb-2">Burn / CubeCL <span className="text-xs text-kf-muted/70 font-normal">(Tracel AI, <a href="https://burn.dev/blog/fusion-tensor-operation-streams/" className="text-kf-accent hover:underline">tensor-stream fusion</a>, Mar 2024)</span></h3>
+              <p className="text-sm text-kf-muted leading-relaxed">
+                Rust-side tensor-op stream fusion targeting CUDA, Metal, ROCm, Vulkan, and WGPU.
+                Reported up to 78&times; on the WGPU backend for elementwise operators.
+                This work targets WebGPU directly without the Rust compilation step.
+              </p>
+            </div>
+            <div className="card">
+              <h3 className="font-semibold mb-2">ONNX Runtime Web (WebGPU EP) <span className="text-xs text-kf-muted/70 font-normal">(Microsoft, <a href="https://opensource.microsoft.com/blog/2024/02/29/onnx-runtime-web-unleashes-generative-ai-in-the-browser-using-webgpu/" className="text-kf-accent hover:underline">v1.17, Feb 2024</a>)</span></h3>
+              <p className="text-sm text-kf-muted leading-relaxed">
+                WebGPU execution provider with graph-level node fusion (Conv+Add and similar patterns).
+                Production-grade, used by Transformers.js. Fuses operator patterns; this work fuses the full transformer block.
+              </p>
+            </div>
+            <div className="card">
+              <h3 className="font-semibold mb-2">Maczan <span className="text-xs text-kf-muted/70 font-normal">(<a href="https://arxiv.org/abs/2604.02344" className="text-kf-accent hover:underline">arXiv:2604.02344</a>, Feb 2026) &mdash; closest peer</span></h3>
+              <p className="text-sm text-kf-muted leading-relaxed">
+                Cross-vendor WebGPU dispatch overhead study across 4 GPU vendors, 3 backends, 3 browsers.
+                Found 53% throughput improvement from fusion on Vulkan and no benefit on CUDA. Per-dispatch
+                API overhead 24&ndash;71&micro;s. This work covers 92 devices and 7 vendors, and fuses the entire
+                decoding loop into one dispatch.
+              </p>
+            </div>
+            <div className="card">
+              <h3 className="font-semibold mb-2">nnJIT <span className="text-xs text-kf-muted/70 font-normal">(Jia et al, <a href="https://arxiv.org/abs/2309.08978" className="text-kf-accent hover:underline">arXiv:2309.08978</a>, Sept 2023)</span></h3>
+              <p className="text-sm text-kf-muted leading-relaxed">
+                First paper to explicitly target WebGPU for browser DL inference, via JIT kernel generation.
+                Optimizes individual kernels but does not fuse them. Establishes the WebGPU compute path;
+                this work uses fusion on top.
               </p>
             </div>
           </div>

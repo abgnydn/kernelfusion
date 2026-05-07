@@ -140,16 +140,16 @@ export default function HomePage() {
       {/* Hero */}
       <header className="max-w-4xl mx-auto px-6 pt-12 pb-8 text-center">
         <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
-          GPU frameworks waste{" "}
-          <span className="bg-gradient-to-r from-kf-accent to-orange-300 bg-clip-text text-transparent">92% or more</span>
-          {" "}of their time.
+          Naïve browser GPU code wastes{" "}
+          <span className="bg-gradient-to-r from-kf-accent to-orange-300 bg-clip-text text-transparent">92%+ of dispatch time.</span>
           <br />
-          <span className="text-kf-muted text-3xl md:text-4xl font-bold">I fixed it.</span>
+          <span className="text-kf-muted text-3xl md:text-4xl font-bold">Kernel fusion fixes it. I shipped it for the web.</span>
         </h1>
         <p className="text-lg text-kf-muted max-w-2xl mx-auto mb-8">
-          Kernel fusion eliminates per-dispatch overhead by packing entire computations into
-          single GPU instructions. 92 real-world devices across 7 GPU vendors — median 71&times; on
-          Apple Silicon, 56&times; on NVIDIA, 20&times; on phones; peaks 226&times; / 402&times; / 103&times;.
+          Kernel fusion is a known technique &mdash; TVM, XLA, and Burn already fuse operator patterns.
+          What I shipped: full transformer decode and full evolutionary fitness loops as a single WebGPU
+          dispatch, measured across 92 real-world devices and 7 GPU vendors. Median 71&times; on Apple Silicon,
+          56&times; on NVIDIA, 20&times; on phones; peaks 226&times; / 402&times; / 103&times;.
           Zero installation. Any browser.
         </p>
         <div className="flex flex-wrap gap-3 justify-center">
@@ -165,7 +165,7 @@ export default function HomePage() {
           <h2 className="text-xl font-bold mb-4">The insight</h2>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <p className="text-sm text-kf-muted mb-3 font-medium uppercase tracking-wider">How frameworks work</p>
+              <p className="text-sm text-kf-muted mb-3 font-medium uppercase tracking-wider">How eager dispatch works</p>
               <div className="bg-kf-bg rounded-lg p-4 font-mono text-xs text-kf-muted leading-relaxed">
                 <p className="text-kf-red">dispatch</p> step 1 → <span className="text-kf-muted/50">wait</span> → <span className="text-kf-red">dispatch</span> step 2 → <span className="text-kf-muted/50">wait</span>
                 <p className="mt-1">... &times; 1,500 steps = 22,500 round-trips</p>

@@ -106,7 +106,7 @@ export function LiveResults() {
   const browserEntries = Object.entries(data.browsers).sort((a, b) => b[1] - a[1]);
 
   const vendorLines = topVendors
-    .map((v) => `• ${v.name}: ${v.avgSpeedup.toLocaleString()}\u00D7 faster on average`)
+    .map((v) => `• ${v.name}: ${v.avgSpeedup.toLocaleString()}\u00D7 median (fused vs unfused, same device)`)
     .join("\n");
 
   const mobileLine =
@@ -115,9 +115,9 @@ export function LiveResults() {
       : "";
 
   const shareText = [
-    `${data.total.toLocaleString()} people tested a research technique called kernel fusion on their own devices.`,
+    `${data.total.toLocaleString()} people ran a kernel-fusion benchmark on their own devices via WebGPU.`,
     ``,
-    `It makes GPU programs faster than PyTorch by eliminating wasted time between instructions. How much faster:`,
+    `Eliminating per-dispatch overhead — fused single dispatch vs naïve unfused dispatch on the same hardware:`,
     ``,
     vendorLines,
     ``,

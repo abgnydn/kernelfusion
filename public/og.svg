@@ -14,12 +14,12 @@
   <!-- Title -->
   <text x="600" y="310" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="56" font-weight="800" fill="#fafafa">Kernel Fusion</text>
   <!-- Subtitle -->
-  <text x="600" y="370" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="26" fill="#71717a">GPU frameworks waste 92% of their time. We fixed it.</text>
-  <!-- Stats -->
-  <text x="300" y="470" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="42" font-weight="800" fill="#f59e0b">720×</text>
-  <text x="300" y="505" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="16" fill="#71717a">sequential compute</text>
-  <text x="600" y="470" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="42" font-weight="800" fill="#f59e0b">458×</text>
-  <text x="600" y="505" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="16" fill="#71717a">transformer inference</text>
+  <text x="600" y="370" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="26" fill="#71717a">Single-dispatch fusion for WebGPU. Measured on 92 devices.</text>
+  <!-- Stats — durable counts only (multipliers move with hardware, omitted) -->
+  <text x="300" y="470" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="42" font-weight="800" fill="#f59e0b">4</text>
+  <text x="300" y="505" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="16" fill="#71717a">GPU APIs reproduced</text>
+  <text x="600" y="470" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="42" font-weight="800" fill="#f59e0b">1</text>
+  <text x="600" y="505" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="16" fill="#71717a">fused GPU kernel</text>
   <text x="900" y="470" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="42" font-weight="800" fill="#f59e0b">2</text>
   <text x="900" y="505" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="16" fill="#71717a">published preprints</text>
   <!-- Footer -->

@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+title: "Single-Kernel Fusion for Sequential Fitness Evaluation via WebGPU Compute Shaders"
+message: "If you use this software, please cite it using the metadata from this file."
+type: software
+authors:
+  - given-names: "Ahmet Barış"
+    family-names: "Günaydın"
+    # orcid: "https://orcid.org/0000-0000-0000-0000"
+repository-code: "https://github.com/abgnydn/kernelfusion"
+url: "https://kernelfusion.dev"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.19331833"
+    description: "Concept DOI — always resolves to the latest version"
+license: MIT

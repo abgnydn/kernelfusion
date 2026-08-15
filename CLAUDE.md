@@ -19,15 +19,16 @@ routes.
 - `src/app/layout.tsx` — metadata, JSON-LD with `sameAs` (from `SAME_AS`).
 - `src/lib/constants.ts` — project-specific links (DOIs, repos). Re-exports
   shared data from `src/lib/sites.ts`.
-- `src/lib/sites.ts` — synced from `~/sites-shared/sites.ts`. **Never edit
-  in place** — edit the source and run `node ~/sites-shared/sync.mjs`.
+- `src/lib/sites.ts` — a copy of `~/dev/sites-shared/generated/sites.json`.
+  **Never edit in place** — fix `facts.json` / `sites.source.json`, run
+  `node bin/build-sites.mjs` in sites-shared, then resync.
 - `src/components/live-results.tsx` — fetches and renders live gpubench
   results inline in the homepage.
 
 ### Applied section convention
 
 `CROSSLINKS.kernelfusion[0]` is the flagship (currently `webgpudna`), rendered
-as a hero card with the 4-stat grid. The remaining three render as a 3-col
+as a hero card with a 3-stat grid. The remaining three render as a 3-col
 grid via `CATEGORY_BADGE` static class-string map (Tailwind JIT doesn't
 extract `text-${color}` dynamic strings).
 
@@ -47,8 +48,9 @@ Deploy: `node ~/sites-shared/deploy.mjs kernelfusion` (CF Pages, project
 
 ## Cross-site context
 
-`src/lib/sites.ts` is synced from `~/sites-shared/sites.ts`. Edit URLs,
-taglines, and `sameAs` there — never in place.
+`src/lib/sites.ts` is a copy of `~/dev/sites-shared/generated/sites.json`.
+Edit URLs, taglines and `sameAs` in sites-shared, never in place. Every
+number in it resolves from `facts.json`.
 
 ## Known gaps
 

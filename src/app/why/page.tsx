@@ -3,7 +3,7 @@ import { LINKS } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Why Kernel Fusion Matters — kernelfusion.dev",
-  description: "Naïve browser GPU pipelines waste 92%+ of their time on dispatch overhead. Kernel fusion eliminates it; I shipped it for WebGPU and measured the result on 92 unique devices across 7 GPU vendors.",
+  description: "Naïve browser GPU pipelines waste 92%+ of their time on dispatch overhead. Kernel fusion eliminates it; I shipped it for WebGPU and measured the result on 119 distinct GPU/browser/OS combinations across 7 GPU vendors.",
 };
 
 const beforeAfter = [
@@ -25,7 +25,7 @@ const personas = [
 const steps = [
   { title: "The problem: 92%+ overhead on naïve dispatch", desc: "Eager browser GPU pipelines (TF.js, hand-written WebGPU loops) send one small task to the GPU, wait for it to finish, send the next one. For a 64-token generation with 4 layers, that's 1,024 separate round-trips. Each round-trip takes longer than the actual math. Compilers like TVM, XLA, and Burn fuse some of this — but rarely the whole graph, and the WebGPU backend is the least-tuned target across the board." },
   { title: "The fix: one dispatch", desc: "Pack the entire computation \u2014 all tokens, all layers, all operations \u2014 into a single GPU instruction. The GPU loops internally. No round-trips. No waiting. Same math, same result." },
-  { title: "The proof: 92 unique devices, 7 vendors", desc: "Two preprints, then 92 unique devices ran it across 7 GPU vendors. Median speedups (the typical experience): Apple Silicon 71\u00D7, NVIDIA 56\u00D7, ARM Mali 55\u00D7, Intel 43\u00D7, AMD 40\u00D7, Qualcomm Adreno 20\u00D7. Tested across Chrome, Firefox, Safari on macOS, Windows, Linux, Android, and iOS." },
+  { title: "The proof: 119 GPU/browser/OS combinations, 7 vendors", desc: "Two preprints, then 119 distinct GPU/browser/OS combinations ran it across 7 GPU vendors. Median speedups (the typical experience): Apple Silicon 71\u00D7, NVIDIA 56\u00D7, ARM Mali 55\u00D7, Intel 43\u00D7, AMD 40\u00D7, Qualcomm Adreno 20\u00D7. Tested across Chrome, Firefox, Safari on macOS, Windows, Linux, Android, and iOS." },
   { title: "The result: AI on a phone", desc: "213,000 tokens per second peak on a phone. 15,000 average across all mobile devices. No Python, no CUDA, no cloud. A browser tab outperforms PyTorch on the same hardware." },
 ];
 
@@ -57,7 +57,7 @@ export default function WhyPage() {
           <p className="text-lg text-kf-muted max-w-lg mx-auto">
             Naïve browser GPU pipelines waste 92%+ of their time on dispatch overhead &mdash; sending tasks
             one by one instead of all at once. Kernel fusion eliminates that. I shipped it for WebGPU and
-            measured the result across 92 unique devices and 7 GPU vendors.
+            measured the result across 119 distinct GPU/browser/OS combinations and 7 GPU vendors.
           </p>
         </header>
 
@@ -65,7 +65,7 @@ export default function WhyPage() {
         <section className="py-16 border-t border-kf-border/50">
           <div className="grid grid-cols-3 gap-4">
             {[
-              { number: "71\u00D7", label: "Apple Silicon median\n92 unique devices, 7 vendors" },
+              { number: "71\u00D7", label: "Apple Silicon median\n119 GPU/browser/OS combinations, 7 vendors" },
               { number: "20\u00D7", label: "Qualcomm Adreno median\nAndroid phones" },
               { number: "0", label: "things to install\njust open Chrome" },
             ].map((s) => (
@@ -149,7 +149,7 @@ export default function WhyPage() {
               </p>
             </div>
             <div className="card">
-              <h3 className="font-semibold mb-2">92 unique devices ran it on everything else</h3>
+              <h3 className="font-semibold mb-2">119 GPU/browser/OS combinations ran it on everything else</h3>
               <p className="text-sm text-kf-muted leading-relaxed">
                 Phones, tablets, Chromebooks, gaming rigs, office laptops &mdash; across 7 GPU vendors and 4 operating systems.
                 Devices with GPUs that were never designed for compute workloads. These GPUs have much worse dispatch overhead than the ones in the paper.
@@ -202,7 +202,7 @@ export default function WhyPage() {
               <p className="text-sm text-kf-muted leading-relaxed">
                 Cross-vendor WebGPU dispatch overhead study across 4 GPU vendors, 3 backends, 3 browsers.
                 Found 53% throughput improvement from fusion on Vulkan and no benefit on CUDA. Per-dispatch
-                API overhead 24&ndash;71&micro;s. This work covers 92 devices and 7 vendors, and fuses the entire
+                API overhead 24&ndash;71&micro;s. This work covers 119 GPU/browser/OS combinations and 7 vendors, and fuses the entire
                 decoding loop into one dispatch.
               </p>
             </div>

@@ -48,8 +48,13 @@ function timeAgo(dateStr: string): string {
 // range). The honest peak is the max of the cleaned distribution.
 // Field name `avgSpeedup` is a misnomer — it now holds median, not mean.
 // Rename pending; update API contract first.
+//
+// `total` is the transformer_runs row count from /api/transformer-results —
+// a run count, not devices and not people. There is no fact id for it, so
+// nothing is published for it offline: 0 means "not fetched", and every
+// surface that prints it is gated on `live`.
 const FALLBACK: LiveData = {
-  total: 92,
+  total: 0,
   vendors: [
     { name: "Apple Silicon", runs: 65, avgSpeedup: 71, peakSpeedup: 226 },
     { name: "NVIDIA", runs: 56, avgSpeedup: 56, peakSpeedup: 402 },
@@ -115,7 +120,9 @@ export function LiveResults() {
       : "";
 
   const shareText = [
-    `${data.total.toLocaleString()} people ran a kernel-fusion benchmark on their own devices via WebGPU.`,
+    live
+      ? `${data.total.toLocaleString()} kernel-fusion benchmark runs submitted from people's own devices via WebGPU.`
+      : `People run kernel-fusion benchmarks on their own devices via WebGPU.`,
     ``,
     `Eliminating per-dispatch overhead — fused single dispatch vs naïve unfused dispatch on the same hardware:`,
     ``,
@@ -136,7 +143,7 @@ export function LiveResults() {
     <div className="card">
       <div className="flex items-center gap-2 mb-4">
         <span className="text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded-full bg-kf-green/10 text-kf-green">
-          {data.total.toLocaleString()} Runs &middot; 8 GPU Vendors
+          {live && <>{data.total.toLocaleString()} Runs &middot; </>}8 GPU Vendors
         </span>
         {live && (
           <span className="inline-flex items-center gap-1 text-[10px] font-medium uppercase tracking-wider text-kf-muted">
@@ -149,8 +156,8 @@ export function LiveResults() {
       <h3 className="text-xl font-bold mb-2">Real-world distribution across 7 GPU vendors</h3>
       <p className="text-sm text-kf-muted leading-relaxed mb-6">
         {live
-          ? `Live from gpubench.dev. ${data.total.toLocaleString()} unique devices have run the transformer benchmark across 7 GPU vendors. Medians shown (means are skewed by Safari-on-macOS measurement artifacts).`
-          : "Since publishing, 92 unique devices across 7 GPU vendors have run the benchmarks. Medians shown."}
+          ? `Live from gpubench.dev. ${data.total.toLocaleString()} transformer-benchmark runs across 7 GPU vendors. Medians shown (means are skewed by Safari-on-macOS measurement artifacts).`
+          : "Since publishing, 794 runs from 119 distinct GPU/browser/OS combinations across 7 GPU vendors have been published (gpubench, 2026-08-14). Medians shown."}
       </p>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">

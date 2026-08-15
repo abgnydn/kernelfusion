@@ -13,8 +13,9 @@
   <line x1="600" y1="165" x2="600" y2="205" stroke="#f59e0b" stroke-width="4" stroke-linecap="round"/>
   <!-- Title -->
   <text x="600" y="310" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="56" font-weight="800" fill="#fafafa">Kernel Fusion</text>
-  <!-- Subtitle -->
-  <text x="600" y="370" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="26" fill="#71717a">Single-dispatch fusion for WebGPU. Measured on 92 devices.</text>
+  <!-- Subtitle — no device/run count: this file is baked into og.png, and a
+       count that moves would be stale the day after it is rendered. -->
+  <text x="600" y="370" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="26" fill="#71717a">Single-dispatch fusion for WebGPU. Measured on real devices, in public.</text>
   <!-- Stats — durable counts only (multipliers move with hardware, omitted) -->
   <text x="300" y="470" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="42" font-weight="800" fill="#f59e0b">4</text>
   <text x="300" y="505" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="16" fill="#71717a">GPU APIs reproduced</text>

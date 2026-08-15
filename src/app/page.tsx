@@ -148,7 +148,7 @@ export default function HomePage() {
         <p className="text-lg text-kf-muted max-w-2xl mx-auto mb-8">
           Kernel fusion is a known technique &mdash; TVM, XLA, and Burn already fuse operator patterns.
           What I shipped: full transformer decode and full evolutionary fitness loops as a single WebGPU
-          dispatch, measured across 92 real-world devices and 7 GPU vendors. Median 71&times; on Apple Silicon,
+          dispatch, measured across 119 real-world GPU/browser/OS combinations and 7 GPU vendors. Median 71&times; on Apple Silicon,
           56&times; on NVIDIA, 20&times; on phones; peaks 226&times; / 402&times; / 103&times;.
           Zero installation. Any browser.
         </p>
@@ -388,7 +388,7 @@ export default function HomePage() {
           </p>
 
           {FLAGSHIP.stats && (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
+            <div className="grid grid-cols-3 gap-2 mb-4">
               {FLAGSHIP.stats.map((s) => (
                 <div key={s.label} className="bg-kf-bg rounded-lg p-3 text-center">
                   <div className="text-lg font-extrabold text-kf-green">{s.value}</div>

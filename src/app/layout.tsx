@@ -8,24 +8,24 @@ const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700", "
 export const metadata: Metadata = {
   metadataBase: new URL("https://kernelfusion.dev"),
   alternates: { canonical: "/" },
-  title: "Kernel Fusion — single-dispatch fusion for WebGPU, measured on 92 devices",
-  description: "Cross-vendor medians, fused vs unfused on the same device: 71× Apple Silicon, 56× NVIDIA, 20× phones (92 unique devices, 7 GPU vendors). Two published preprints. Zero install — runs in any browser.",
+  title: "Kernel Fusion — single-dispatch fusion for WebGPU, measured on 119 GPU/browser/OS combinations",
+  description: "Cross-vendor medians, fused vs unfused on the same device: 71× Apple Silicon, 56× NVIDIA, 20× phones (119 distinct GPU/browser/OS combinations, 7 GPU vendors). Two published preprints. Zero install — runs in any browser.",
   keywords: [
     "kernel fusion", "WebGPU", "GPU computing", "transformer inference",
     "compute shaders", "WGSL", "browser AI", "LLM inference",
   ],
   openGraph: {
     title: "Kernel Fusion — single-dispatch fusion for WebGPU",
-    description: "Fused vs unfused medians: 71× Apple Silicon, 56× NVIDIA, 20× phones. 92 unique devices, 7 vendors. Two preprints. Zero install.",
+    description: "Fused vs unfused medians: 71× Apple Silicon, 56× NVIDIA, 20× phones. 119 distinct GPU/browser/OS combinations, 7 vendors. Two preprints. Zero install.",
     type: "website",
     url: "https://kernelfusion.dev",
     siteName: "Kernel Fusion",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Kernel Fusion — 71× median Apple Silicon, 56× NVIDIA, 20× phones, 92 devices" }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Kernel Fusion — 71× median Apple Silicon, 56× NVIDIA, 20× phones, 119 GPU/browser/OS combinations" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Kernel Fusion — single-dispatch fusion for WebGPU",
-    description: "Fused vs unfused medians: 71× Apple Silicon, 56× NVIDIA, 20× phones. 92 unique devices. Zero install.",
+    description: "Fused vs unfused medians: 71× Apple Silicon, 56× NVIDIA, 20× phones. 119 distinct GPU/browser/OS combinations. Zero install.",
     images: ["/og.png"],
   },
 };
@@ -40,7 +40,7 @@ const jsonLd = {
       "url": "https://kernelfusion.dev",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "Any (WebGPU browser)",
-      "description": "Single-dispatch kernel fusion for WebGPU. Cross-vendor medians, fused vs unfused on the same device: 71× Apple Silicon, 56× NVIDIA, 20× phones (92 unique devices, 7 GPU vendors).",
+      "description": "Single-dispatch kernel fusion for WebGPU. Cross-vendor medians, fused vs unfused on the same device: 71× Apple Silicon, 56× NVIDIA, 20× phones (119 distinct GPU/browser/OS combinations, 7 GPU vendors).",
       "author": { "@id": "https://kernelfusion.dev#author" },
       "isPartOf": {
         "@type": "CreativeWork",

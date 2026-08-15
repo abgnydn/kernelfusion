@@ -9,7 +9,7 @@ Research umbrella for GPU kernel fusion — eliminating per-dispatch overhead ac
 ### Paper 1: Sequential Fitness Evaluation (v6, published)
 - **159-720×** over PyTorch on the same GPU
 - Confirmed across CUDA, WebGPU, JAX/XLA, Triton
-- 92 unique devices across 7 GPU vendors via [gpubench.dev](https://gpubench.dev)
+- 119 distinct GPU/browser/OS combinations across 7 GPU vendors via [gpubench.dev](https://gpubench.dev) (live table, read 2026-08-14)
 - [Preprint](https://doi.org/10.5281/zenodo.19331833) · [Code](https://github.com/abgnydn/webgpu-kernel-fusion)
 
 ### Paper 2: Transformer Decoding (v2, published)

@@ -42,27 +42,26 @@ function timeAgo(dateStr: string): string {
   return `${days}d ago`;
 }
 
-// Fallback values use medians from the gpubench DB snapshot 2026-05-04.
-// Peak values exclude Safari-on-macOS measurement artifacts (where the
-// unfused baseline stalls and produces inflated speedups in the 1k-79k×
-// range). The honest peak is the max of the cleaned distribution.
 // Field name `avgSpeedup` is a misnomer — it now holds median, not mean.
 // Rename pending; update API contract first.
 //
-// `total` is the transformer_runs row count from /api/transformer-results —
-// a run count, not devices and not people. There is no fact id for it, so
-// nothing is published for it offline: 0 means "not fetched", and every
-// surface that prints it is gated on `live`.
+// This component publishes numbers that gpubench.dev's D1 table generates.
+// None of them has a fact id in sites-shared/facts.json, so none may be
+// hard-coded here (rule 1) and a ratio without a recorded baseline may not
+// sit in a stat tile (rule 2). The fallback therefore carries structure and
+// zero measurements: vendor names so the layout holds, zeros everywhere
+// else. Every numeric surface below is already gated on `> 0`, so before the
+// fetch lands the card shows what it is rather than what it once measured.
 const FALLBACK: LiveData = {
   total: 0,
   vendors: [
-    { name: "Apple Silicon", runs: 65, avgSpeedup: 71, peakSpeedup: 226 },
-    { name: "NVIDIA", runs: 56, avgSpeedup: 56, peakSpeedup: 402 },
-    { name: "ARM Mali", runs: 14, avgSpeedup: 55, peakSpeedup: 120 },
-    { name: "Qualcomm Adreno", runs: 29, avgSpeedup: 20, peakSpeedup: 103 },
+    { name: "Apple Silicon", runs: 0, avgSpeedup: 0, peakSpeedup: 0 },
+    { name: "NVIDIA", runs: 0, avgSpeedup: 0, peakSpeedup: 0 },
+    { name: "ARM Mali", runs: 0, avgSpeedup: 0, peakSpeedup: 0 },
+    { name: "Qualcomm Adreno", runs: 0, avgSpeedup: 0, peakSpeedup: 0 },
   ],
-  mobile: { runs: 36, avgTokensPerSec: 15000, peakTokensPerSec: 213000 },
-  browsers: { Chrome: 347, Firefox: 69, Safari: 62 },
+  mobile: { runs: 0, avgTokensPerSec: 0, peakTokensPerSec: 0 },
+  browsers: {},
 };
 
 export function LiveResults() {
@@ -157,14 +156,14 @@ export function LiveResults() {
       <p className="text-sm text-kf-muted leading-relaxed mb-6">
         {live
           ? `Live from gpubench.dev. ${data.total.toLocaleString()} transformer-benchmark runs across 7 GPU vendors. Medians shown (means are skewed by Safari-on-macOS measurement artifacts).`
-          : "Since publishing, 794 runs from 119 distinct GPU/browser/OS combinations across 7 GPU vendors have been published (gpubench, 2026-08-14). Medians shown."}
+          : "Since publishing, 794 runs from 119 distinct GPU/browser/OS combinations across 7 GPU vendors have been published (gpubench, 2026-08-14). Per-vendor medians load from gpubench.dev, the table that computes them."}
       </p>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
         {topVendors.map((v) => (
           <div key={v.name} className="bg-kf-bg rounded-lg p-3 text-center">
             <div className="text-2xl font-extrabold text-kf-accent">
-              {v.avgSpeedup.toLocaleString()}&times;
+              {v.avgSpeedup > 0 ? <>{v.avgSpeedup.toLocaleString()}&times;</> : <>&mdash;</>}
             </div>
             <div className="text-[10px] text-kf-muted mt-1">{v.name} median</div>
             {v.peakSpeedup > v.avgSpeedup && (

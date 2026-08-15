@@ -39,7 +39,7 @@ const demos = [
     results: [
       { number: "170", label: "gen/s (M2 Pro)" },
       { number: "400", label: "gen/s (RTX 3090)" },
-      { number: "71\u00D7", label: "real-world median (Apple Silicon)" },
+      { number: "one dispatch", label: "whole fitness loop" },
     ],
     href: LINKS.gpuBench,
     papers: ["Paper 1 (kernel fusion)"],
@@ -148,9 +148,8 @@ export default function HomePage() {
         <p className="text-lg text-kf-muted max-w-2xl mx-auto mb-8">
           Kernel fusion is a known technique &mdash; TVM, XLA, and Burn already fuse operator patterns.
           What I shipped: full transformer decode and full evolutionary fitness loops as a single WebGPU
-          dispatch, measured across 119 real-world GPU/browser/OS combinations and 7 GPU vendors. Median 71&times; on Apple Silicon,
-          56&times; on NVIDIA, 20&times; on phones; peaks 226&times; / 402&times; / 103&times;.
-          Zero installation. Any browser.
+          dispatch, measured in the open on whatever hardware visitors brought rather than on one lab machine.
+          Two DOI-archived preprints, one npm SDK. Zero installation. Any browser.
         </p>
         <div className="flex flex-wrap gap-3 justify-center">
           <a href={LINKS.flappyDemo} className="btn-primary">Flappy Evolution Demo</a>
@@ -326,12 +325,12 @@ export default function HomePage() {
 
           <div className="grid grid-cols-3 gap-3 mb-4">
             <div className="bg-kf-bg rounded-lg p-3 text-center">
-              <div className="text-lg font-extrabold text-kf-accent">71&times;</div>
-              <div className="text-[10px] text-kf-muted mt-1">Apple Silicon median</div>
+              <div className="text-lg font-extrabold text-kf-accent">one dispatch</div>
+              <div className="text-[10px] text-kf-muted mt-1">whole decode loop</div>
             </div>
             <div className="bg-kf-bg rounded-lg p-3 text-center">
-              <div className="text-lg font-extrabold text-kf-accent">20&times;</div>
-              <div className="text-[10px] text-kf-muted mt-1">Android phones median</div>
+              <div className="text-lg font-extrabold text-kf-accent">WGSL</div>
+              <div className="text-[10px] text-kf-muted mt-1">hand-written kernels</div>
             </div>
             <div className="bg-kf-bg rounded-lg p-3 text-center">
               <div className="text-lg font-extrabold text-kf-accent">0</div>

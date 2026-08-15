@@ -26,7 +26,7 @@ const demos = [
     description: "Watch 50 neural networks learn to play Flappy Bird in real-time. GPU evaluates 4,096 birds per dispatch via kernel fusion. Open in multiple tabs to connect via WebRTC and evolve together.",
     results: [
       { number: "4,096", label: "birds per GPU dispatch" },
-      { number: "200+", label: "generations/sec" },
+      { number: "real-time", label: "evolution in the tab" },
       { number: "P2P", label: "WebRTC genome exchange" },
     ],
     href: LINKS.flappyDemo,
@@ -37,8 +37,8 @@ const demos = [
     title: "Rastrigin Benchmark",
     description: "4,096-population evolutionary optimization on a 2,000-dimensional multimodal landscape. Measures raw GPU throughput of the fused evolutionary kernel.",
     results: [
-      { number: "170", label: "gen/s (M2 Pro)" },
-      { number: "400", label: "gen/s (RTX 3090)" },
+      { number: "2,000-D", label: "multimodal landscape" },
+      { number: "your GPU", label: "measured live on gpubench" },
       { number: "one dispatch", label: "whole fitness loop" },
     ],
     href: LINKS.gpuBench,
@@ -49,8 +49,8 @@ const demos = [
     title: "Transformer Decoding",
     description: "Fused attention + FFN + LayerNorm in a single GPU dispatch. Benchmarks unfused, fused, parallel, and f16 variants across model dimensions.",
     results: [
-      { number: "458\u00D7", label: "parallel vs unfused" },
-      { number: "16K", label: "tokens/sec" },
+      { number: "one dispatch", label: "attention + FFN + LayerNorm" },
+      { number: "f32 \u00B7 f16", label: "precision variants" },
       { number: "D=256", label: "max tested dimension" },
     ],
     href: LINKS.transformerBench,
@@ -78,13 +78,13 @@ const papers = [
   {
     status: "published",
     title: "Single-Kernel Fusion for Sequential Fitness Evaluation",
-    subtitle: "via WebGPU Compute Shaders",
+    subtitle: "via WebGPU Compute Shaders \u00B7 Zenodo preprint, v7 (2026-07-28)",
     results: [
-      { number: "720\u00D7", label: "CUDA over PyTorch (same T4)" },
-      { number: "159\u00D7", label: "WebGPU over PyTorch (same M2)" },
-      { number: "4", label: "GPU APIs confirmed" },
+      { number: "one dispatch", label: "whole fitness loop" },
+      { number: "CUDA \u00B7 WebGPU", label: "JAX/XLA \u00B7 Triton" },
+      { number: "DOI-archived", label: "versioned on Zenodo" },
     ],
-    description: "Fusing sequential fitness evaluations into single GPU dispatches eliminates per-step kernel launch overhead. Proven across CUDA, WebGPU, JAX/XLA, and Triton on two hardware platforms.",
+    description: "Single-dispatch fusion of sequential fitness evaluation: the per-step kernel launch overhead that dominates framework-based GPU computation disappears when the loop collapses into one compute shader. Reproduced across four GPU APIs on two hardware platforms, then measured across vendors via the public benchmark fleet. The ratios live in the preprint, which restates them whenever a re-measurement moves them.",
     links: [
       { label: "Preprint", href: LINKS.ecPaper },
       { label: "Code", href: LINKS.ecRepo },
@@ -94,13 +94,13 @@ const papers = [
   {
     status: "published",
     title: "Single-Kernel Fusion for Autoregressive Transformer Decoding",
-    subtitle: "via WebGPU Compute Shaders",
+    subtitle: "via WebGPU Compute Shaders \u00B7 Zenodo preprint, v3 (2026-07-28)",
     results: [
-      { number: "458\u00D7", label: "parallel kernel vs unfused (D=256)" },
-      { number: "161\u00D7", label: "over PyTorch MPS (D=32)" },
-      { number: "16K", label: "tokens/sec in the browser" },
+      { number: "one dispatch", label: "attention + FFN + LayerNorm" },
+      { number: "cross-checked", label: "equivalence before timing" },
+      { number: "DOI-archived", label: "versioned on Zenodo" },
     ],
-    description: "Browser LLM engines dispatch 1,024 separate GPU kernels per generation. We fuse everything into one dispatch. Single-threaded: 6.6-13.5\u00D7. Parallel kernel (64 threads + shared memory): 66-458\u00D7. Beats PyTorch MPS by 7.5-161\u00D7 at all tested sizes up to D=256. 16,410 tok/s at D=32.",
+    description: "Single-dispatch fusion of the autoregressive decoding loop, replacing the per-token chain of kernel launches a browser LLM engine normally issues. Single-threaded and parallel shared-memory variants are cross-checked for numerical equivalence against an f64 CPU reference before anything is timed. The preprint carries the measured ratios and the v3 erratum that revised them.",
     links: [
       { label: "Preprint", href: LINKS.transformerPaper },
       { label: "Code", href: LINKS.transformerRepo },

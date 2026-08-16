@@ -152,11 +152,11 @@ export function LiveResults() {
         )}
       </div>
 
-      <h3 className="text-xl font-bold mb-2">Real-world distribution across 7 GPU vendors</h3>
+      <h3 className="text-xl font-bold mb-2">Real-world distribution across GPU vendors</h3>
       <p className="text-sm text-kf-muted leading-relaxed mb-6">
         {live
-          ? `Live from gpubench.dev. ${data.total.toLocaleString()} transformer-benchmark runs across 7 GPU vendors. Medians shown (means are skewed by Safari-on-macOS measurement artifacts).`
-          : "Since publishing, 794 runs from 119 distinct GPU/browser/OS combinations across 7 GPU vendors have been published (gpubench, 2026-08-14). Per-vendor medians load from gpubench.dev, the table that computes them."}
+          ? `Live from gpubench.dev. ${data.total.toLocaleString()} transformer-benchmark runs. Medians shown (means are skewed by Safari-on-macOS measurement artifacts).`
+          : "Per-vendor medians load from gpubench.dev, the table that computes them; the current run count is served at gpubench.dev/api/results."}
       </p>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">

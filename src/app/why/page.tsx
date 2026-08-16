@@ -3,11 +3,11 @@ import { LINKS } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Why Kernel Fusion Matters — kernelfusion.dev",
-  description: "Naïve browser GPU pipelines waste 92%+ of their time on dispatch overhead. Kernel fusion eliminates it; I shipped it for WebGPU and measured the result on 119 distinct GPU/browser/OS combinations across 7 GPU vendors.",
+  description: "Naïve browser GPU pipelines spend most of their time on dispatch overhead. Kernel fusion eliminates it; I shipped it for WebGPU and measured the result across the public benchmark fleet.",
 };
 
 const beforeAfter = [
-  { before: "ChatGPT in your browser types 5 words per second. You assume your laptop isn't powerful enough.", after: "Your GPU was idle 92%+ of the time. The waiting is eliminated. Same GPU, same model \u2014 the dispatch overhead simply stops being paid." },
+  { before: "ChatGPT in your browser types a few words per second. You assume your laptop isn't powerful enough.", after: "Your GPU was idle most of the time. The waiting is eliminated. Same GPU, same model \u2014 the dispatch overhead simply stops being paid." },
   { before: "Running AI locally means installing Python, CUDA, PyTorch, downloading model weights, debugging driver conflicts.", after: "Open a browser tab. That's it. The AI runs on the GPU you already have, at near-native speed." },
   { before: "Every AI feature costs $2-4/hour in cloud GPU. 100K users = $50K/month in servers.", after: "The user's GPU does the work. Server cost: $0. The browser IS the infrastructure." },
   { before: "A student in rural India can't afford a GPU cluster or cloud API credits to learn AI.", after: "A $300 phone with Chrome can run transformer inference locally. No internet needed after model download." },

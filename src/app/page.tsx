@@ -141,7 +141,7 @@ export default function HomePage() {
       <header className="max-w-4xl mx-auto px-6 pt-12 pb-8 text-center">
         <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
           Naïve browser GPU code wastes{" "}
-          <span className="bg-gradient-to-r from-kf-accent to-orange-300 bg-clip-text text-transparent">92%+ of dispatch time.</span>
+          <span className="bg-gradient-to-r from-kf-accent to-orange-300 bg-clip-text text-transparent">most of its time on dispatch.</span>
           <br />
           <span className="text-kf-muted text-3xl md:text-4xl font-bold">Kernel fusion fixes it. I shipped it for the web.</span>
         </h1>
@@ -168,7 +168,7 @@ export default function HomePage() {
               <div className="bg-kf-bg rounded-lg p-4 font-mono text-xs text-kf-muted leading-relaxed">
                 <p className="text-kf-red">dispatch</p> step 1 → <span className="text-kf-muted/50">wait</span> → <span className="text-kf-red">dispatch</span> step 2 → <span className="text-kf-muted/50">wait</span>
                 <p className="mt-1">... &times; 1,500 steps = 22,500 round-trips</p>
-                <p className="mt-2 text-kf-red">92%+ of time = waiting, not computing</p>
+                <p className="mt-2 text-kf-red">most of the time = waiting, not computing</p>
               </div>
             </div>
             <div>
@@ -382,7 +382,7 @@ export default function HomePage() {
           <h3 className="text-2xl font-bold mb-1">{FLAGSHIP.domain}</h3>
           <p className="text-sm text-kf-muted leading-relaxed mb-5">
             {FLAGSHIP.shortDesc} The &ldquo;one dispatch, full history&rdquo; shape is the same kernel-fusion
-            pattern that gives 3&ndash;4 orders of magnitude of speedup on launch-bound workloads &mdash;
+            pattern whose measured gains on launch-bound workloads are recorded in the preprints &mdash;
             here it&apos;s what makes real Monte Carlo radiobiology cheap enough to run live in a browser tab.
           </p>
 
